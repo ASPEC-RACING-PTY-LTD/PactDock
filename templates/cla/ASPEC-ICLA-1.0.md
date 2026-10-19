@@ -8,7 +8,7 @@ before this agreement is published. See docs/LEGAL_REVIEW.md.
 
 **Version 1.0 (draft)**
 
-This Individual Contributor Licence Agreement (the **Agreement**) is between you, the individual identified by the GitHub account that accepts it (**You**), and **ASPEC RACING PTY LTD** (ACN/ABN [LEGAL REVIEW: insert]), a company incorporated in Australia (**ASPEC**, **We** or **Us**).
+This Individual Contributor Licence Agreement (the **Agreement**) is between you, the individual identified by the GitHub account that accepts it (**You**), and **ASPEC RACING PTY LTD** (ABN 41 676 208 227), an Australian proprietary company (**ASPEC**, **We** or **Us**).
 
 It covers every Contribution You Submit to any project that ASPEC owns or manages and that refers to this Agreement (each a **Project**). You keep the copyright in Your Contributions. This Agreement gives ASPEC a licence to use them.
 
@@ -68,7 +68,7 @@ Subject to clause 6.6, neither party is liable to the other under this Agreement
 
 6.2 **Consideration.** You enter into this Agreement in exchange for ASPEC considering Your Contributions for inclusion in a Project. [LEGAL REVIEW: confirm, or execute as a deed.]
 
-6.3 **Governing law.** The laws of [LEGAL REVIEW: New South Wales / Victoria / Queensland], Australia, govern this Agreement. Its conflict-of-laws rules do not apply, and neither does the United Nations Convention on Contracts for the International Sale of Goods. Each party submits to the non-exclusive jurisdiction of the courts of that State and the courts that can hear appeals from them.
+6.3 **Governing law.** The laws of Victoria, Australia, govern this Agreement. Its conflict-of-laws rules do not apply, and neither does the United Nations Convention on Contracts for the International Sale of Goods. Each party submits to the non-exclusive jurisdiction of the courts of that State and the courts that can hear appeals from them.
 
 6.4 **Entire agreement.** This Agreement is the whole agreement between the parties about its subject matter. It applies to all Contributions You Submit to a Project, from the Effective Date and also to earlier ones.
 

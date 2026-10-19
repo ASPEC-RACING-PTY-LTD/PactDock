@@ -128,7 +128,7 @@ Threat model and controls (details in [docs/SECURITY_MODEL.md](docs/SECURITY_MOD
 | 2 | Contributors, signing, store, evaluation, reporting, orchestration | Done |
 | 3 | Unit, integration (fakes) and end-to-end (compiled action vs mock API) tests; CI on Linux, Windows and macOS; dist check | Done |
 | 4 | Docs, example workflows and configs, draft ASPEC CLAs | Done |
-| 5 | **Approvals:** licence (§9, done), CLA legal review (§8), trademark policy | **Partly done: CLA review and trademark policy outstanding** |
+| 5 | **Approvals:** licence (§9, done), CLA legal review (§8) | **Partly done: CLA legal review outstanding** |
 | 6 | Publish: create the GitHub repo, tag `v1.0.0`, record the release SHA in the examples, optionally list on the Marketplace | After phase 5 |
 | 7 | Future: merge-queue support, an organisation-member exemption, a helper script for entity records, signature export/report | Backlog |
 
@@ -154,7 +154,7 @@ Threat model and controls (details in [docs/SECURITY_MODEL.md](docs/SECURITY_MOD
 
 ASPEC approved the standard, unmodified **PolyForm Shield 1.0.0** on 2026-10-20. `LICENSE.md` holds the verbatim text with ASPEC's `Required Notice:` line, and `package.json` declares `PolyForm-Shield-1.0.0`. No custom licence is used.
 
-Still open (see [docs/LICENSING.md](docs/LICENSING.md)): the trademark policy for the "PactDock" name (draft), and whether to restrict bundling inside non-competing paid products. Shield does not restrict this, so it remains allowed unless ASPEC decides otherwise.
+ASPEC decided not to trademark "PactDock", so there is no trademark policy. Rebranded forks are restricted only when they compete with PactDock. Still open (see [docs/LICENSING.md](docs/LICENSING.md)): whether to restrict bundling inside non-competing paid products. Shield does not restrict this, so it remains allowed unless ASPEC decides otherwise.
 
 ## 10. Known limitations
 

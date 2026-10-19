@@ -8,7 +8,7 @@ before this agreement is published. See docs/LEGAL_REVIEW.md.
 
 **Version 1.0 (draft)**
 
-This Entity Contributor Licence Agreement (the **Agreement**) is between the legal entity named in the acceptance statement (**You**) and **ASPEC RACING PTY LTD** (ACN/ABN [LEGAL REVIEW: insert]), a company incorporated in Australia (**ASPEC**, **We** or **Us**). It is accepted for You by the individual signatory identified by the GitHub account that accepts it (the **Signatory**).
+This Entity Contributor Licence Agreement (the **Agreement**) is between the legal entity named in the acceptance statement (**You**) and **ASPEC RACING PTY LTD** (ABN 41 676 208 227), an Australian proprietary company (**ASPEC**, **We** or **Us**). It is accepted for You by the individual signatory identified by the GitHub account that accepts it (the **Signatory**).
 
 It covers Contributions Submitted on Your behalf by Your Authorised Contributors to any project that ASPEC owns or manages and that refers to this Agreement (each a **Project**). You keep the copyright in Your Contributions. This Agreement gives ASPEC a licence to use them.
 
@@ -64,7 +64,7 @@ The Agreement takes effect when the Signatory accepts it. However, ASPEC will tr
 
 ## Schedule 1: Authorised Contributors
 
-Give each individual's name and GitHub account (ASPEC records the numeric GitHub account ID), and send updates to [LEGAL REVIEW: insert ASPEC contact email].
+Give each individual's name and GitHub account (ASPEC records the numeric GitHub account ID), and send updates to legal@aspecracing.com.au.
 
 | Name | GitHub account | Start date | End date |
 | ---- | -------------- | ---------- | -------- |

@@ -1,4 +1,4 @@
-Required Notice: Copyright (c) 2026 ASPEC RACING PTY LTD. All rights not granted by this licence are reserved. Commercial licensing and other permissions require the written permission of ASPEC RACING PTY LTD.
+Required Notice: Copyright (c) 2026 ASPEC RACING PTY LTD (ABN 41 676 208 227), https://aspecracing.com.au. All rights not granted by this licence are reserved. Requests for commercial licensing or other permissions: legal@aspecracing.com.au.
 
 # PolyForm Shield License 1.0.0
 

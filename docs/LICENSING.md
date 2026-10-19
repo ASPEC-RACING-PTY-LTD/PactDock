@@ -24,7 +24,7 @@ Sources: polyformproject.org, mariadb.com/bsl11, elastic.co/licensing/elastic-li
 
 ## Recommendation
 
-**Adopt PolyForm Shield 1.0.0, unmodified.** Add a separate trademark policy for the PactDock name, and a plain-English notice outside the licence text.
+**Adopt PolyForm Shield 1.0.0, unmodified**, with a plain-English notice outside the licence text.
 
 Why:
 
@@ -40,9 +40,9 @@ Why:
 | # | Item | Why it matters | Options |
 | --- | --- | --- | --- |
 | L1 | PolyForm Shield 1.0.0 as PactDock's licence | This is a legal decision reserved to ASPEC | **Approved 2026-10-20** |
-| L2 | **Trademark policy** ([draft](drafts/TRADEMARKS.md)) | Shield says nothing about trademarks. "Rebrand" and passing-off are better handled by trademark law and a policy. | Approve the draft. Consider registering "PactDock" with IP Australia. |
+| L2 | Trademark policy | Shield says nothing about trademarks or names. | **Declined by ASPEC (2026-10-20): "PactDock" will not be trademarked and there is no trademark policy.** Rebranded forks are restricted only when they compete (Shield's noncompete). Renaming a non-competing copy is allowed. |
 | L3 | **Monetising PactDock inside a larger, non-competing paid product** (e.g. a paid DevOps bundle that includes PactDock) | Shield probably does **not** block this, because the bundle does not compete with PactDock as such. | (a) Accept it (simplest, recommended). (b) Add a custom extra clause or dual licence. That requires bespoke drafting and legal review, and loses Shield's predictability. **Paused for approval.** |
-| L4 | **Required Notice line** | Shield passes on "Required Notice:" lines to all recipients | Added without an ABN or contact email. Add both when known. Optionally also add a `Licensor Line of Business:` line (see the Shield "Discontinued Products" section). |
+| L4 | **Required Notice line** | Shield passes on "Required Notice:" lines to all recipients | **Done**: copyright, ABN 41 676 208 227, website and legal@aspecracing.com.au. Optionally also add a `Licensor Line of Business:` line (see the Shield "Discontinued Products" section). |
 | L5 | **Inbound licence for PactDock's own contributors** | Contributions to PactDock should be covered by the ASPEC CLA (dogfooding), so ASPEC can relicense them | Enable `.github/workflows/cla.yml` after the CLA review |
 
 **No custom licence is needed** unless ASPEC chooses option L3(b).
@@ -56,5 +56,4 @@ Why:
 
 1. ~~Replace `LICENSE.md` with the verbatim text (from the official `polyformproject/polyform-licenses` repository, tag `1.0.0`) plus a Required Notice line.~~ Done.
 2. ~~Set `"license": "PolyForm-Shield-1.0.0"` in `package.json`.~~ Done.
-3. Publish `TRADEMARKS.md` at the repository root once item L2 is approved.
-4. ~~Update the README licence section.~~ Done.
+3. ~~Update the README licence section.~~ Done.

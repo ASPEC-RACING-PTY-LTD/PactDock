@@ -32,8 +32,8 @@ Sources: harmonyagreements.org/agreements, `docs/ha-cla-i-v1.pdf`, `docs/ha-cla-
 
 1. **Licence vs assignment.** A non-exclusive licence lets ASPEC relicense, but not sue third parties for infringing contributors' copyright, and gives ASPEC no exclusivity. Is that acceptable? The requirement says contributors keep copyright, so a licence is the intended model.
 2. **Electronic acceptance.** Does a GitHub comment satisfy the *Electronic Transactions Act 1999* (Cth) and the State acts, for the method of identification and intention? The moral-rights consent must be "in writing". Is an electronic comment sufficient? Any assignment or exclusive licence would need a written signed instrument (s 196(3)), but none is used here.
-3. **Governing law.** Which State (NSW / VIC / QLD …)? Exclusive or non-exclusive jurisdiction?
-4. **Company details.** Insert the ACN/ABN and a contact email in both drafts and in the trademark policy.
+3. **Governing law.** The drafts now use **Victoria**, ASPEC's main business location. Confirm this, and whether jurisdiction should be exclusive or non-exclusive (the drafts say non-exclusive).
+4. **Company details.** Done: both drafts identify ASPEC RACING PTY LTD by ABN 41 676 208 227 and use legal@aspecracing.com.au. Confirm whether the ACN should also appear.
 5. **Minors.** Is acceptance by under-18s enforceable? Is a guardian process required?
 6. **Employees of entities.** How should individual authors' moral-rights consents be obtained (ECLA 2.5)? Is the s 35(6) employer ownership assumption correct for contractors?
 7. **Patent defence.** Should a defensive-termination clause be added?
@@ -45,4 +45,4 @@ Sources: harmonyagreements.org/agreements, `docs/ha-cla-i-v1.pdf`, `docs/ha-cla-
 
 ## D. PactDock's own licence
 
-PolyForm Shield 1.0.0 was approved and adopted unmodified on 2026-10-20 (item L1). Still open in [LICENSING.md](LICENSING.md): the trademark policy (L2), the optional bundling restriction (L3, which would need a custom clause) and the ABN/contact details for the Required Notice (L4).
+PolyForm Shield 1.0.0 was approved and adopted unmodified on 2026-10-20 (item L1). ASPEC decided not to trademark "PactDock" (L2), and the Required Notice now carries the ABN and legal contact (L4). Still open in [LICENSING.md](LICENSING.md): the optional bundling restriction (L3, which would need a custom clause).
