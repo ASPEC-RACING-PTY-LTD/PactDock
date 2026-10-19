@@ -1,6 +1,6 @@
 # Contributing to PactDock
 
-Thank you for helping. Before your pull request can be merged, you will be asked to accept the ASPEC Individual Contributor Licence Agreement (or your employer the Entity agreement). This happens once the CLA workflow is enabled; see [docs/LEGAL_REVIEW.md](docs/LEGAL_REVIEW.md).
+Thank you for helping. Before your pull request can be merged, you will be asked to accept the ASPEC Individual Contributor Licence Agreement (or your employer the Entity agreement).
 
 Ground rules:
 

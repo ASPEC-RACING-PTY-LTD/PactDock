@@ -1,12 +1,6 @@
-<!--
-DRAFT FOR LEGAL REVIEW. NOT YET APPROVED FOR USE.
-Items marked [LEGAL REVIEW] must be confirmed by an Australian legal practitioner
-before this agreement is published. See docs/LEGAL_REVIEW.md.
--->
-
 # ASPEC Entity Contributor Licence Agreement
 
-**Version 1.0 (draft)**
+**Version 1.0**
 
 This Entity Contributor Licence Agreement (the **Agreement**) is between the legal entity named in the acceptance statement (**You**) and **ASPEC RACING PTY LTD** (ABN 41 676 208 227), an Australian proprietary company (**ASPEC**, **We** or **Us**). It is accepted for You by the individual signatory identified by the GitHub account that accepts it (the **Signatory**).
 
@@ -24,7 +18,7 @@ It covers Contributions Submitted on Your behalf by Your Authorised Contributors
 
 1.5 **Submit**, **Copyright** and **Effective Date** have the meanings given in the ASPEC Individual Contributor Licence Agreement, applied to You and Your Authorised Contributors.
 
-1.6 **Patent Claims** means any patent claims that You or Your Affiliates own or control now or later, and that would be infringed by making, using, selling or otherwise dealing in a Contribution, alone or combined with the Project it was Submitted to. [LEGAL REVIEW: Harmony makes the Affiliates' inclusion optional.]
+1.6 **Patent Claims** means any patent claims that You or Your Affiliates own or control now or later, and that would be infringed by making, using, selling or otherwise dealing in a Contribution, alone or combined with the Project it was Submitted to.
 
 ## 2. Licence grants
 
@@ -32,11 +26,11 @@ It covers Contributions Submitted on Your behalf by Your Authorised Contributors
 
 2.2 **Copyright licence.** You grant ASPEC, and You procure that Your Affiliates grant ASPEC, a perpetual, irrevocable, worldwide, non-exclusive, royalty-free and fee-free licence under the Copyright in each Contribution. ASPEC may transfer it and may sublicense it through multiple tiers. It covers using, reproducing, modifying, adapting, translating, publicly displaying, publicly performing, communicating to the public, distributing and commercially exploiting the Contribution. This applies to the Contribution on its own and as part of any other work, in any form or medium.
 
-2.3 **Relicensing.** Without limiting clause 2.2, ASPEC may license, sublicense or distribute any Contribution, and any work that includes it, under any terms ASPEC chooses. These include open-source, source-available, proprietary and commercial licences, with or without charge. However, if ASPEC includes a Contribution in any work that it makes available to third parties, ASPEC will also license the Contribution under the licence or licences that applied to the Project on the date the Contribution was Submitted (the **Submission Date**), in addition to any other terms it chooses. [LEGAL REVIEW: Harmony-style outbound-licence condition, as in Harmony "Option Five". Confirm the trigger ("includes … in any work that it makes available to third parties") and how it applies to a Project that had no licence on the Submission Date.]
+2.3 **Relicensing.** Without limiting clause 2.2, ASPEC may license, sublicense or distribute any Contribution, and any work that includes it, under any terms ASPEC chooses. These include open-source, source-available, proprietary and commercial licences, with or without charge. However, if ASPEC includes a Contribution in any work that it makes available to third parties, ASPEC will also license the Contribution under the licence or licences that applied to the Project on the date the Contribution was Submitted (the **Submission Date**), in addition to any other terms it chooses.
 
 2.4 **Patent licence.** You grant ASPEC, and everyone who receives a Project or Contribution from ASPEC directly or indirectly, a perpetual, irrevocable, worldwide, non-exclusive, royalty-free licence under the Patent Claims. It allows them to make, have made, use, sell, offer to sell, import and otherwise transfer the Contribution, and the Project combined with it. ASPEC may sublicense and transfer this licence.
 
-2.5 **Moral rights.** You will obtain, from each individual author of a Contribution, that author's genuine written consent for the purposes of Part IX of the *Copyright Act 1968* (Cth) and corresponding laws elsewhere. The consent must be in the terms of clause 2.5 of the ASPEC Individual Contributor Licence Agreement, and You must obtain it before the Contribution is Submitted. [LEGAL REVIEW: an entity cannot consent on behalf of its employees. Confirm the mechanism, for example consents in employment contracts.]
+2.5 **Moral rights.** You will obtain, from each individual author of a Contribution, that author's genuine written consent for the purposes of Part IX of the *Copyright Act 1968* (Cth) and corresponding laws elsewhere. The consent must be in the terms of clause 2.5 of the ASPEC Individual Contributor Licence Agreement, and You must obtain it before the Contribution is Submitted.
 
 2.6 **No obligation; reserved rights.** ASPEC does not have to use any Contribution. You keep all rights not expressly granted.
 
@@ -56,7 +50,7 @@ You confirm that:
 
 ## 4. Disclaimer, liability and general terms
 
-Clauses 4 (Disclaimer), 5 (Limitation of liability) and 6 (General) of the ASPEC Individual Contributor Licence Agreement, version 1.0, apply to this Agreement as if set out in full, with references to "You" being references to the entity. [LEGAL REVIEW: consider setting these out in full rather than incorporating them by reference.]
+Clauses 4 (Disclaimer), 5 (Limitation of liability) and 6 (General) of the ASPEC Individual Contributor Licence Agreement, version 1.0, apply to this Agreement as if set out in full, with references to "You" being references to the entity.
 
 ## 5. Verification
 

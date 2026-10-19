@@ -1,12 +1,6 @@
-<!--
-DRAFT FOR LEGAL REVIEW. NOT YET APPROVED FOR USE.
-Items marked [LEGAL REVIEW] must be confirmed by an Australian legal practitioner
-before this agreement is published. See docs/LEGAL_REVIEW.md.
--->
-
 # ASPEC Individual Contributor Licence Agreement
 
-**Version 1.0 (draft)**
+**Version 1.0**
 
 This Individual Contributor Licence Agreement (the **Agreement**) is between you, the individual identified by the GitHub account that accepts it (**You**), and **ASPEC RACING PTY LTD** (ABN 41 676 208 227), an Australian proprietary company (**ASPEC**, **We** or **Us**).
 
@@ -28,13 +22,13 @@ It covers every Contribution You Submit to any project that ASPEC owns or manage
 
 2.1 **Ownership.** You keep ownership of the Copyright in Your Contributions. Apart from the rights You grant in this Agreement, You may use Your Contributions for any purpose.
 
-2.2 **Copyright licence.** You grant ASPEC a perpetual, irrevocable, worldwide, non-exclusive, royalty-free and fee-free licence under the Copyright in each Contribution. ASPEC may transfer it and may sublicense it through multiple tiers. It covers using, reproducing, modifying, adapting, translating, publicly displaying, publicly performing, communicating to the public, distributing and commercially exploiting the Contribution. This applies to the Contribution on its own and as part of any other work, in any form or medium, whether now known or developed later. [LEGAL REVIEW: the Harmony template limits use to the "Material"; this grant is deliberately broader.]
+2.2 **Copyright licence.** You grant ASPEC a perpetual, irrevocable, worldwide, non-exclusive, royalty-free and fee-free licence under the Copyright in each Contribution. ASPEC may transfer it and may sublicense it through multiple tiers. It covers using, reproducing, modifying, adapting, translating, publicly displaying, publicly performing, communicating to the public, distributing and commercially exploiting the Contribution. This applies to the Contribution on its own and as part of any other work, in any form or medium, whether now known or developed later.
 
-2.3 **Relicensing.** Without limiting clause 2.2, ASPEC may license, sublicense or distribute any Contribution, and any work that includes it, under any terms ASPEC chooses. These include open-source, source-available, proprietary and commercial licences, with or without charge. However, if ASPEC includes a Contribution in any work that it makes available to third parties, ASPEC will also license the Contribution under the licence or licences that applied to the Project on the date the Contribution was Submitted (the **Submission Date**), in addition to any other terms it chooses. [LEGAL REVIEW: Harmony-style outbound-licence condition, as in Harmony "Option Five". Confirm the trigger ("includes … in any work that it makes available to third parties") and how it applies to a Project that had no licence on the Submission Date.]
+2.3 **Relicensing.** Without limiting clause 2.2, ASPEC may license, sublicense or distribute any Contribution, and any work that includes it, under any terms ASPEC chooses. These include open-source, source-available, proprietary and commercial licences, with or without charge. However, if ASPEC includes a Contribution in any work that it makes available to third parties, ASPEC will also license the Contribution under the licence or licences that applied to the Project on the date the Contribution was Submitted (the **Submission Date**), in addition to any other terms it chooses.
 
-2.4 **Patent licence.** You grant ASPEC, and everyone who receives a Project or Contribution from ASPEC directly or indirectly, a perpetual, irrevocable, worldwide, non-exclusive, royalty-free licence under Your Patent Claims. It allows them to make, have made, use, sell, offer to sell, import and otherwise transfer the Contribution, and the Project combined with it. ASPEC may sublicense and transfer this licence. [LEGAL REVIEW: consider a defensive-termination clause. Harmony has none.]
+2.4 **Patent licence.** You grant ASPEC, and everyone who receives a Project or Contribution from ASPEC directly or indirectly, a perpetual, irrevocable, worldwide, non-exclusive, royalty-free licence under Your Patent Claims. It allows them to make, have made, use, sell, offer to sell, import and otherwise transfer the Contribution, and the Project combined with it. ASPEC may sublicense and transfer this licence.
 
-2.5 **Moral rights.** If You are an author, You give Your genuine and informed written consent, for the purposes of Part IX of the *Copyright Act 1968* (Cth) and corresponding laws elsewhere, to ASPEC and its licensees and successors doing or omitting any act in relation to Your Contributions. This includes using them without attribution, with attribution to others, or in altered or adapted form. The consent is given to the extent permitted by law and covers acts and omissions both before and after the date of this consent. Where consent is not enough under the applicable law, You waive Your moral rights to the extent the law permits, and agree not to assert them against those persons. [LEGAL REVIEW: Australian moral rights cannot be waived or assigned, only consented to. Confirm the scope and form of the consent.]
+2.5 **Moral rights.** If You are an author, You give Your genuine and informed written consent, for the purposes of Part IX of the *Copyright Act 1968* (Cth) and corresponding laws elsewhere, to ASPEC and its licensees and successors doing or omitting any act in relation to Your Contributions. This includes using them without attribution, with attribution to others, or in altered or adapted form. The consent is given to the extent permitted by law and covers acts and omissions both before and after the date of this consent. Where consent is not enough under the applicable law, You waive Your moral rights to the extent the law permits, and agree not to assert them against those persons.
 
 2.6 **No obligation.** ASPEC does not have to use, include or distribute any Contribution.
 
@@ -44,7 +38,7 @@ It covers every Contribution You Submit to any project that ASPEC owns or manage
 
 You confirm that:
 
-(a) You have the legal capacity and authority to enter into this Agreement and are at least 18 years old. If You are under 18, a parent or legal guardian must accept on Your behalf. [LEGAL REVIEW]
+(a) You have the legal capacity and authority to enter into this Agreement and are at least 18 years old. If You are under 18, a parent or legal guardian must accept on Your behalf.
 
 (b) Each Contribution is Your original work, or You otherwise have enough rights to grant the licences in clause 2.
 
@@ -60,13 +54,13 @@ Apart from the confirmations in clause 3, each Contribution is provided "as is".
 
 ## 5. Limitation of liability
 
-Subject to clause 6.6, neither party is liable to the other under this Agreement for any indirect or consequential loss, or for loss of profit, revenue or data, however it arises. This does not limit liability for breach of clause 3, or for fraud or wilful misconduct. [LEGAL REVIEW: Harmony protects only the contributor; consider whether ASPEC also needs protection.]
+Subject to clause 6.6, neither party is liable to the other under this Agreement for any indirect or consequential loss, or for loss of profit, revenue or data, however it arises. This does not limit liability for breach of clause 3, or for fraud or wilful misconduct.
 
 ## 6. General
 
-6.1 **Acceptance and records.** You may accept this Agreement electronically. One way is by posting the acceptance statement required by ASPEC from Your authenticated GitHub account. You agree that an electronic acceptance identifies You, shows Your intention to be bound and has the same effect as a signature, for the purposes of the *Electronic Transactions Act 1999* (Cth) and corresponding State and Territory laws. ASPEC will keep a record of Your acceptance, including Your GitHub account ID, the time of acceptance, the version of this Agreement and the content of Your acceptance statement. [LEGAL REVIEW: confirm sufficiency for "writing" and "signed" requirements, including clause 2.5.]
+6.1 **Acceptance and records.** You may accept this Agreement electronically. One way is by posting the acceptance statement required by ASPEC from Your authenticated GitHub account. You agree that an electronic acceptance identifies You, shows Your intention to be bound and has the same effect as a signature, for the purposes of the *Electronic Transactions Act 1999* (Cth) and corresponding State and Territory laws. ASPEC will keep a record of Your acceptance, including Your GitHub account ID, the time of acceptance, the version of this Agreement and the content of Your acceptance statement.
 
-6.2 **Consideration.** You enter into this Agreement in exchange for ASPEC considering Your Contributions for inclusion in a Project. [LEGAL REVIEW: confirm, or execute as a deed.]
+6.2 **Consideration.** You enter into this Agreement in exchange for ASPEC considering Your Contributions for inclusion in a Project.
 
 6.3 **Governing law.** The laws of Victoria, Australia, govern this Agreement. Its conflict-of-laws rules do not apply, and neither does the United Nations Convention on Contracts for the International Sale of Goods. Each party submits to the non-exclusive jurisdiction of the courts of that State and the courts that can hear appeals from them.
 

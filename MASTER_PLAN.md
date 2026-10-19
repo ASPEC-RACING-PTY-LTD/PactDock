@@ -3,7 +3,7 @@
 > This plan is the source of truth for the PactDock architecture and roadmap. Change it first, then the code.
 
 **Owner:** ASPEC RACING PTY LTD (Australia)
-**Status:** v1.0 implemented. Licence approved: PolyForm Shield 1.0.0 (2026-10-20). CLA texts are **pending legal review** (see §8).
+**Status:** v1.0 implemented. Licence approved: PolyForm Shield 1.0.0 (2026-10-20). ASPEC CLAs v1.0 finalised by ASPEC (see §8).
 
 ---
 
@@ -117,7 +117,7 @@ Threat model and controls (details in [docs/SECURITY_MODEL.md](docs/SECURITY_MOD
 - **Writes:** Contents API with blob-SHA optimistic concurrency, retried up to 4 times. Idempotent per comment ID. Existing entries are never modified or deleted by PactDock.
 - **Audit:** every write is a Git commit naming the signer, account ID and PR. Git history is the audit log.
 - **Store protection (recommended):** a ruleset or branch protection on the store's branch that blocks force-pushes and deletions. Limit write access to the PactDock App and the legal or maintainer team. Turn on audit-log streaming where available. On GitHub Free private repos, where rulesets may be unavailable, keep collaborators to a minimum and mirror or back up the repository.
-- **Privacy:** records hold GitHub account IDs, logins and comment text, but no emails. Keep the store private. Consider a retention and privacy notice under the *Privacy Act 1988* (Cth) (flagged in docs/LEGAL_REVIEW.md).
+- **Privacy:** records hold GitHub account IDs, logins and comment text, but no emails. Keep the store private.
 
 ## 7. Implementation phases
 
@@ -127,8 +127,8 @@ Threat model and controls (details in [docs/SECURITY_MODEL.md](docs/SECURITY_MOD
 | 1 | Runtime helpers, HTTP client, App auth, config | Done |
 | 2 | Contributors, signing, store, evaluation, reporting, orchestration | Done |
 | 3 | Unit, integration (fakes) and end-to-end (compiled action vs mock API) tests; CI on Linux, Windows and macOS; dist check | Done |
-| 4 | Docs, example workflows and configs, draft ASPEC CLAs | Done |
-| 5 | **Approvals:** licence (§9, done), CLA legal review (§8) | **Partly done: CLA legal review outstanding** |
+| 4 | Docs, example workflows and configs, ASPEC CLAs | Done |
+| 5 | **Approvals:** licence (§9), CLA texts (§8) | Done |
 | 6 | Publish: create the GitHub repo, tag `v1.0.0`, record the release SHA in the examples, optionally list on the Marketplace | After phase 5 |
 | 7 | Future: merge-queue support, an organisation-member exemption, a helper script for entity records, signature export/report | Backlog |
 
@@ -137,18 +137,17 @@ Threat model and controls (details in [docs/SECURITY_MODEL.md](docs/SECURITY_MOD
 - Rights recipient: **ASPEC RACING PTY LTD**.
 - Model: Harmony HA-CLA-I / HA-CLA-E v1.0 structure, with original drafting in `templates/cla/`.
 - Contributors **keep copyright**. ASPEC gets a perpetual, irrevocable, worldwide, non-exclusive, royalty-free, transferable, sublicensable copyright licence, a patent licence and an express right to relicense under any terms, including proprietary or commercial ones.
-- Differences from Harmony that need review are listed in [docs/LEGAL_REVIEW.md](docs/LEGAL_REVIEW.md). They include:
+- Main differences from Harmony:
   - the broadened grant;
   - a reworded Option Five condition (continued licensing under the Project's licence on the Submission Date);
   - Australian moral-rights consent instead of a waiver;
-  - the governing-law State;
+  - Victorian governing law;
   - ACL carve-out;
   - electronic acceptance;
   - consideration;
   - minors;
   - entity employee consents;
   - the defensive patent clause.
-- **The texts are drafts and must not be published to contributors until they are legally reviewed.**
 
 ## 9. PactDock licensing (approved 2026-10-20)
 

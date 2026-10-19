@@ -49,8 +49,7 @@ Entity (company) agreements are signed by an authorised signatory in the same wa
 | [docs/CONFIGURATION.md](docs/CONFIGURATION.md) | Every config key, input, output and record format |
 | [docs/SECURITY_MODEL.md](docs/SECURITY_MODEL.md) | Threat model, controls, residual risks |
 | [MASTER_PLAN.md](MASTER_PLAN.md) | Architecture, research, roadmap, testing |
-| [templates/cla/](templates/cla) | Draft ASPEC Individual and Entity CLAs (Harmony-modelled; **pending legal review**) |
-| [docs/LEGAL_REVIEW.md](docs/LEGAL_REVIEW.md) | Items flagged for legal review |
+| [templates/cla/](templates/cla) | ASPEC Individual and Entity CLAs (modelled on Harmony) |
 | [docs/LICENSING.md](docs/LICENSING.md) | Why PolyForm Shield was chosen, and the remaining open items |
 
 ## Development

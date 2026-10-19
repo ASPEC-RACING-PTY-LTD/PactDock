@@ -1,5 +1,5 @@
 {
-  "$comment": "PactDock's own CLA configuration (dogfooding). Agreements are drafts pending legal review; do not enable the workflow until approved.",
+  "$comment": "PactDock's own CLA configuration (dogfooding).",
   "rightsHolder": "ASPEC RACING PTY LTD",
   "individual": {
     "id": "aspec-icla",

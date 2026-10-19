@@ -23,7 +23,7 @@ Put the agreement text(s) in the repository, on the default branch, for example:
 .github/cla/ECLA-1.0.md      # entity agreement (optional)
 ```
 
-ASPEC-owned repositories should use the ASPEC drafts in [`templates/cla/`](../templates/cla) **once legal review is complete** (see [LEGAL_REVIEW.md](LEGAL_REVIEW.md)). Other organisations must supply their own agreements. The ASPEC drafts name ASPEC as the rights recipient and are not a template for anyone else's legal needs.
+ASPEC-owned repositories use the ASPEC agreements in [`templates/cla/`](../templates/cla). Other organisations must supply their own agreements. The ASPEC agreements name ASPEC as the rights recipient and are not a template for anyone else's legal needs.
 
 ## 2. Create the signature store
 

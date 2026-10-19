@@ -1,6 +1,6 @@
 # PactDock licensing
 
-> **Status: ASPEC RACING PTY LTD approved PolyForm Shield 1.0.0 on 2026-10-20.** It is adopted unmodified in [LICENSE.md](../LICENSE.md). Items L2–L5 below are still open. This document is research, not legal advice.
+> **Status: ASPEC RACING PTY LTD approved PolyForm Shield 1.0.0 on 2026-10-20.** It is adopted unmodified in [LICENSE.md](../LICENSE.md). Items L2–L5 below are still open.
 
 ## Requirements
 
@@ -28,7 +28,7 @@ Sources: polyformproject.org, mariadb.com/bsl11, elastic.co/licensing/elastic-li
 
 Why:
 
-- It is a standard licence drafted by lawyers, short, recognised and free to use. It has no change date, so ASPEC's protection does not expire.
+- It is a standard licence, short, recognised and free to use. It has no change date, so ASPEC's protection does not expire.
 - Anyone may use PactDock for any purpose **except** providing a product (a good or a service, paid or free) that competes with PactDock or with ASPEC's products built using it. Internal business use, modification, and redistribution for non-competing purposes are all allowed.
 - Under Shield:
   - (a) Selling copies, (b) hosted CLA-as-a-service, and (c) a rebranded fork offered as a substitute are all **blocked**.
@@ -41,7 +41,7 @@ Why:
 | --- | --- | --- | --- |
 | L1 | PolyForm Shield 1.0.0 as PactDock's licence | This is a legal decision reserved to ASPEC | **Approved 2026-10-20** |
 | L2 | Trademark policy | Shield says nothing about trademarks or names. | **Declined by ASPEC (2026-10-20): "PactDock" will not be trademarked and there is no trademark policy.** Rebranded forks are restricted only when they compete (Shield's noncompete). Renaming a non-competing copy is allowed. |
-| L3 | **Monetising PactDock inside a larger, non-competing paid product** (e.g. a paid DevOps bundle that includes PactDock) | Shield probably does **not** block this, because the bundle does not compete with PactDock as such. | (a) Accept it (simplest, recommended). (b) Add a custom extra clause or dual licence. That requires bespoke drafting and legal review, and loses Shield's predictability. **Paused for approval.** |
+| L3 | **Monetising PactDock inside a larger, non-competing paid product** (e.g. a paid DevOps bundle that includes PactDock) | Shield probably does **not** block this, because the bundle does not compete with PactDock as such. | (a) Accept it (simplest, recommended). (b) Add a custom extra clause or dual licence. That requires bespoke wording and loses Shield's predictability. **Paused for approval.** |
 | L4 | **Required Notice line** | Shield passes on "Required Notice:" lines to all recipients | **Done**: copyright, ABN 41 676 208 227, website and legal@aspecracing.com.au. Optionally also add a `Licensor Line of Business:` line (see the Shield "Discontinued Products" section). |
 | L5 | **Inbound licence for PactDock's own contributors** | Contributions to PactDock should be covered by the ASPEC CLA (dogfooding), so ASPEC can relicense them | Enable `.github/workflows/cla.yml` after the CLA review |
 
