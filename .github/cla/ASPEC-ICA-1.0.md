@@ -1,6 +1,6 @@
 # ASPEC Individual Contributor Agreement
 
-**Version 2.0**
+**Version 1.0**
 
 This Individual Contributor Agreement (the **Agreement**) is between you, the individual identified by the GitHub account that accepts it (**You**), and **ASPEC RACING PTY LTD** (ABN 41 676 208 227), an Australian proprietary company (**ASPEC**, **We** or **Us**).
 
@@ -18,7 +18,7 @@ It covers every Contribution You Submit to any project that ASPEC owns or manage
 
 1.5 **Effective Date** means the date You accept this Agreement.
 
-1.6 **Existing Contribution** means a Contribution You Submitted to a Project before the Effective Date, including one Submitted under version 1.0 of the ASPEC Individual Contributor Licence Agreement.
+1.6 **Existing Contribution** means a Contribution You Submitted to a Project before the Effective Date.
 
 1.7 **Submission Date** means, for a Contribution, the date it was Submitted.
 
@@ -38,7 +38,7 @@ It covers every Contribution You Submit to any project that ASPEC owns or manage
 
 2.7 **Limited waiver of claims.** You agree not to make any claim against ASPEC, its licensees or its successors that arises from the exercise of the rights given to them by this Agreement in Your Contributions. This waiver covers only Your Contributions and the rights given under this Agreement. It does not affect any other claim You may have, any claim about material that is not Your Contribution, or Your rights under clause 2.2 or clause 2.4.
 
-2.8 **Existing Contributions.** The assignment, licences and consents in this clause 2 apply to Existing Contributions and are irrevocable for them. Any licence You granted for an Existing Contribution under an earlier ASPEC agreement continues in effect alongside this Agreement.
+2.8 **Existing Contributions.** The assignment, licences and consents in this clause 2 apply to Existing Contributions and are irrevocable for them.
 
 2.9 **No obligation.** ASPEC does not have to use, include or distribute any Contribution.
 
@@ -80,7 +80,7 @@ You confirm that:
 
 6.4 **Governing law.** The laws of Victoria, Australia, govern this Agreement. Its conflict-of-laws rules do not apply, and neither does the United Nations Convention on Contracts for the International Sale of Goods. Each party submits to the non-exclusive jurisdiction of the courts of that State and the courts that can hear appeals from them.
 
-6.5 **Entire agreement.** This Agreement is the whole agreement between the parties about its subject matter, apart from any licence preserved by clause 2.8.
+6.5 **Entire agreement.** This Agreement is the whole agreement between the parties about its subject matter.
 
 6.6 **Assignment of this Agreement.** ASPEC may assign or novate this Agreement, or any rights under it, to any person without Your consent. Any successor takes it subject to clauses 2.2 and 2.4. You may not assign it without ASPEC's written consent.
 

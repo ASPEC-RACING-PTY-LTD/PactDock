@@ -25,7 +25,7 @@ Put the agreement text(s) in the repository, on the default branch, for example:
 .github/cla/ECLA-1.0.md      # entity agreement (optional)
 ```
 
-ASPEC-owned repositories use the ASPEC agreements in [`templates/cla/`](../templates/cla). Other organisations must supply their own agreements. The ASPEC agreements name ASPEC as the rights recipient and are not a template for anyone else's legal needs.
+PactDock does not supply agreements; each repository owner provides their own. The ASPEC agreements in [`.github/cla/`](../.github/cla) are used by PactDock's own repository only. They name ASPEC as the rights recipient and are not a template.
 
 ## 2. Create the signature store
 

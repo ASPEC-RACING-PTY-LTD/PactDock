@@ -1,17 +1,17 @@
 {
-  "$comment": "PactDock's own CLA configuration (dogfooding). Version 2.0 is a copyright assignment, so 1.0 signatures do not carry over: contributors accept 2.0 once.",
+  "$comment": "PactDock's own CLA configuration (dogfooding).",
   "rightsHolder": "ASPEC RACING PTY LTD",
   "individual": {
     "id": "aspec-icla",
     "name": "ASPEC Individual Contributor Agreement",
-    "version": "2.0",
-    "document": ".github/cla/ASPEC-ICA-2.0.md"
+    "version": "1.0",
+    "document": ".github/cla/ASPEC-ICA-1.0.md"
   },
   "entity": {
     "id": "aspec-ecla",
     "name": "ASPEC Entity Contributor Agreement",
-    "version": "2.0",
-    "document": ".github/cla/ASPEC-ECA-2.0.md"
+    "version": "1.0",
+    "document": ".github/cla/ASPEC-ECA-1.0.md"
   },
   "storage": {
     "repository": "ASPEC-RACING-PTY-LTD/cla-signatures"

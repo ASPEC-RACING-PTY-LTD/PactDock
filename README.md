@@ -49,7 +49,7 @@ Both editions:
 | [docs/CONFIGURATION.md](docs/CONFIGURATION.md) | Every config key, input, output and record format |
 | [docs/SECURITY_MODEL.md](docs/SECURITY_MODEL.md) | Threat model, controls, residual risks |
 | [MASTER_PLAN.md](MASTER_PLAN.md) | Architecture, research, roadmap, testing |
-| [templates/cla/](templates/cla) | ASPEC agreements: v1.0 licence and v2.0 assignment, individual and entity (modelled on Harmony) |
+| [.github/cla/](.github/cla) | The agreements contributors to PactDock itself accept (ASPEC copyright assignment, v1.0). Not a template. |
 | [docs/LICENSING.md](docs/LICENSING.md) | Why PolyForm Shield was chosen, and the remaining open items |
 
 ## Development

@@ -1,6 +1,6 @@
 # ASPEC Entity Contributor Agreement
 
-**Version 2.0**
+**Version 1.0**
 
 This Entity Contributor Agreement (the **Agreement**) is between the legal entity named when it is accepted (**You**) and **ASPEC RACING PTY LTD** (ABN 41 676 208 227), an Australian proprietary company (**ASPEC**, **We** or **Us**). It is accepted for You by the individual signatory identified by the GitHub account that accepts it (the **Signatory**).
 
@@ -16,7 +16,7 @@ It covers Contributions Submitted on Your behalf by Your Authorised Contributors
 
 1.4 **Contribution** means any original work of authorship Submitted to a Project by an Authorised Contributor on Your behalf, or in which You or Your Affiliates own or assert Copyright. It includes source code, documentation, designs, images and other material, and changes to existing material. Something marked clearly in writing as "Not a Contribution" at the time it is Submitted is excluded.
 
-1.5 **Submit**, **Copyright**, **Effective Date**, **Existing Contribution** and **Submission Date** have the meanings given in the ASPEC Individual Contributor Agreement, version 2.0, applied to You and Your Authorised Contributors. An Existing Contribution includes one Submitted under version 1.0 of the ASPEC Entity Contributor Licence Agreement.
+1.5 **Submit**, **Copyright**, **Effective Date**, **Existing Contribution** and **Submission Date** have the meanings given in the ASPEC Individual Contributor Agreement, version 1.0, applied to You and Your Authorised Contributors.
 
 1.6 **Patent Claims** means any patent claims that You or Your Affiliates own or control now or later, and that would be infringed by making, using, selling or otherwise dealing in a Contribution, alone or combined with the Project it was Submitted to.
 
@@ -32,11 +32,11 @@ It covers Contributions Submitted on Your behalf by Your Authorised Contributors
 
 2.5 **Patent licence.** You grant ASPEC, and everyone who receives a Project or Contribution from ASPEC directly or indirectly, a perpetual, irrevocable, worldwide, non-exclusive, royalty-free licence under the Patent Claims. It allows them to make, have made, use, sell, offer to sell, import and otherwise transfer the Contribution, and the Project combined with it. ASPEC may sublicense and transfer this licence.
 
-2.6 **Moral rights.** You will obtain, from each individual author of a Contribution, that author's genuine written consent for the purposes of Part IX of the *Copyright Act 1968* (Cth) and corresponding laws elsewhere. The consent must be in the terms of clause 2.6 of the ASPEC Individual Contributor Agreement, version 2.0, and You must obtain it before the Contribution is Submitted.
+2.6 **Moral rights.** You will obtain, from each individual author of a Contribution, that author's genuine written consent for the purposes of Part IX of the *Copyright Act 1968* (Cth) and corresponding laws elsewhere. The consent must be in the terms of clause 2.6 of the ASPEC Individual Contributor Agreement, version 1.0, and You must obtain it before the Contribution is Submitted.
 
 2.7 **Limited waiver of claims.** You agree, and procure that Your Affiliates agree, not to make any claim against ASPEC, its licensees or its successors that arises from the exercise of the rights given to them by this Agreement in the Contributions. This waiver covers only the Contributions and the rights given under this Agreement. It does not affect any other claim, or Your rights under clause 2.2 or clause 2.4.
 
-2.8 **Existing Contributions.** The assignment, licences and consents in this clause 2 apply to Existing Contributions and are irrevocable for them. Any licence granted for an Existing Contribution under an earlier ASPEC agreement continues in effect alongside this Agreement.
+2.8 **Existing Contributions.** The assignment, licences and consents in this clause 2 apply to Existing Contributions and are irrevocable for them.
 
 2.9 **No obligation; reserved rights.** ASPEC does not have to use any Contribution. You keep all rights not expressly assigned or granted.
 
@@ -56,7 +56,7 @@ You confirm that:
 
 ## 4. General terms
 
-Clauses 4 (Ending future contributions and removal), 5 (Disclaimer and liability) and 6 (General) of the ASPEC Individual Contributor Agreement, version 2.0, apply to this Agreement as if set out in full. References in them to "You" are references to the entity, and the Signatory's electronic acceptance is Your signature for the purposes of clause 6.1.
+Clauses 4 (Ending future contributions and removal), 5 (Disclaimer and liability) and 6 (General) of the ASPEC Individual Contributor Agreement, version 1.0, apply to this Agreement as if set out in full. References in them to "You" are references to the entity, and the Signatory's electronic acceptance is Your signature for the purposes of clause 6.1.
 
 ## 5. Verification
 

@@ -3,7 +3,7 @@
 > This plan is the source of truth for the PactDock architecture and roadmap. Change it first, then the code.
 
 **Owner:** ASPEC RACING PTY LTD (Australia)
-**Status:** PactDock Server and PactDock Lite implemented (2026-10-20). Licence: PolyForm Shield 1.0.0. ASPEC agreements: v1.0 (licence) and v2.0 (assignment) published (§9).
+**Status:** PactDock Server and PactDock Lite implemented (2026-10-20). Licence: PolyForm Shield 1.0.0. ASPEC Contributor Agreements v1.0 (copyright assignment) published (§9).
 
 ---
 
@@ -201,7 +201,7 @@ S3 credentials come only from action inputs (secrets) or `AWS_*` environment var
 | 6 | Publish Lite (`v1.0.0` tag, release SHA in examples) | In progress |
 | 7 | Lite write-once records, S3/R2 store, Discord option | Done |
 | 8 | PactDock Server: core, setup, webhooks, verification, signing portal, admin, storage, backups, Docker | Done |
-| 9 | ASPEC v2.0 assignment agreements | Done (texts published; dogfood config uses v2.0) |
+| 9 | ASPEC assignment agreements (v1.0, replacing the unsigned licence-only drafts) | Done |
 | 10 | Pre-release manual checks: real App via manifest, ruleset with the App as source, fork PR, sign (typed and drawn), co-author, entity activation, email, R2 documents, backup and restore | Pending |
 | 11 | Backlog: merge-queue (`merge_group`) support, export or report of signatures, published container image, migration tool from Lite records to the Server | Backlog |
 
@@ -220,20 +220,18 @@ S3 credentials come only from action inputs (secrets) or `AWS_*` environment var
 ## 9. Agreements (ASPEC repositories)
 
 - Rights recipient: **ASPEC RACING PTY LTD**. Governing law: Victoria, Australia.
-- **v1.0 (licence)**, `ASPEC-ICLA-1.0.md` / `ASPEC-ECLA-1.0.md`: contributors keep copyright and grant a broad licence. These texts never change; signatures under them keep their terms.
-- **v2.0 (assignment)**, `ASPEC-ICA-2.0.md` / `ASPEC-ECA-2.0.md`, modelled on Harmony HA-CAA:
+- **Version 1.0**, `ASPEC-ICA-1.0.md` / `ASPEC-ECA-1.0.md`, a copyright assignment modelled on Harmony HA-CAA. It replaced the earlier licence-only drafts before anyone signed them. Once signed, its terms never change; any later version applies only to people who accept it. It provides:
   - assignment of copyright, including future copyright (s 197 *Copyright Act 1968* (Cth));
   - licence back to the contributor for their own contributions;
   - fallback exclusive licence where an assignment is ineffective;
   - Harmony-style outbound condition: also licensed under the Project's licence on the Submission Date;
   - patent licence and Australian moral-rights consent;
   - limited waiver of claims, covering only the contributor's own contributions and the rights granted;
-  - irrevocable grants for Existing Contributions, with earlier licences preserved;
+  - irrevocable grants for Existing Contributions;
   - the contributor may end the agreement for future contributions; grants for past contributions stay permanent;
   - ASPEC's discretionary removal right and a good-faith removal-request process;
   - no unilateral changes: new versions apply only when accepted;
   - electronic signature consent covering s 196(3) of the *Copyright Act 1968* (Cth).
-- Because v2.0 is an assignment, v1.0 signatures do not satisfy it; contributors accept v2.0 once.
 
 ## 10. PactDock licensing
 

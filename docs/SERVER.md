@@ -105,7 +105,7 @@ In the **Admin** portal:
    - **Enforce contributor agreements on this repository**.
 4. Select **Recheck all open pull requests now**.
 
-The ASPEC agreements in [`templates/cla/`](../templates/cla) are ASPEC's own. Other organisations must use their own agreements.
+PactDock does not supply agreements. Publish your own; the ASPEC agreements in [`.github/cla/`](../.github/cla) are for PactDock's own repository only.
 
 ## 6. Require the check
 

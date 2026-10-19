@@ -3,15 +3,15 @@
   "rightsHolder": "ASPEC RACING PTY LTD",
   "individual": {
     "id": "aspec-icla",
-    "name": "ASPEC Individual Contributor Licence Agreement",
+    "name": "ASPEC Individual Contributor Agreement",
     "version": "1.0",
-    "document": ".github/cla/ASPEC-ICLA-1.0.md"
+    "document": ".github/cla/ASPEC-ICA-1.0.md"
   },
   "entity": {
     "id": "aspec-ecla",
-    "name": "ASPEC Entity Contributor Licence Agreement",
+    "name": "ASPEC Entity Contributor Agreement",
     "version": "1.0",
-    "document": ".github/cla/ASPEC-ECLA-1.0.md"
+    "document": ".github/cla/ASPEC-ECA-1.0.md"
   },
   "storage": {
     "repository": "ASPEC-RACING-PTY-LTD/cla-signatures",

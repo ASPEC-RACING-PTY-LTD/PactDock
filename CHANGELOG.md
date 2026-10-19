@@ -21,7 +21,7 @@
 
 ### Agreements
 
-- Added the ASPEC Individual and Entity Contributor Agreements v2.0 (copyright assignment with licence back, fallback licence, limited waiver and irrevocable grants for existing contributions). The v1.0 texts are unchanged. PactDock's own config now requires v2.0.
+- The ASPEC Individual and Entity Contributor Agreements v1.0 are now copyright assignments with licence back, fallback licence, limited waiver and irrevocable grants for existing contributions. They replace the earlier licence-only drafts, which nobody signed.
 
 ## 1.0.0 (unreleased)
 

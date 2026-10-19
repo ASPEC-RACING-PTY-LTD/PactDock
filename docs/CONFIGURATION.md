@@ -7,9 +7,9 @@ PactDock reads `.github/pactdock.json` (or the `config-path` input) from the **h
   "rightsHolder": "ASPEC RACING PTY LTD",
   "individual": {
     "id": "aspec-icla",
-    "name": "ASPEC Individual Contributor Licence Agreement",
+    "name": "ASPEC Individual Contributor Agreement",
     "version": "1.0",
-    "document": ".github/cla/ASPEC-ICLA-1.0.md",
+    "document": ".github/cla/ASPEC-ICA-1.0.md",
     "sha256": "optional 64-hex pin",
     "acceptedVersions": ["1.0"]
   },
