@@ -19,7 +19,7 @@ Sources: harmonyagreements.org/agreements, `docs/ha-cla-i-v1.pdf`, `docs/ha-cla-
 | # | Clause (ASPEC draft) | Departure | Why |
 | --- | --- | --- | --- |
 | B1 | ICLA 2.2 / ECLA 2.2 | The grant is standalone, not limited to "as part of the Material", and adds "commercially exploiting" | So ASPEC can use, modify, distribute and commercially relicense the contributions |
-| B2 | ICLA 2.3 / ECLA 2.3 | Relicensing on any terms, **without** Option Five's condition to keep licensing under the original licence | Matches the "commercially relicense" requirement. Confirm ASPEC wants no outbound commitment. |
+| B2 | ICLA 2.3 / ECLA 2.3 | Relicensing on any terms, **with** an Option Five-style condition: if ASPEC makes a work containing the Contribution available to third parties, it also licenses the Contribution under the Project's licence on the Submission Date | ASPEC's decision (2026-10-20). Confirm the trigger wording and the case of a Project with no licence on the Submission Date. |
 | B3 | ICLA 2.5 / ECLA 2.5 | Moral rights handled by **consent** under Part IX of the *Copyright Act 1968* (Cth), with a fallback waiver for other jurisdictions | Australian moral rights cannot be waived or assigned, only consented to (ss 195AW–195AWA) |
 | B4 | ICLA 5 | Mutual exclusion of consequential loss (Harmony protects only the contributor) | Business choice |
 | B5 | ICLA 6.1 | Electronic acceptance by GitHub comment, with the record of evidence | PactDock's signing mechanism |

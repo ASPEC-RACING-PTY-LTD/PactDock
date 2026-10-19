@@ -139,7 +139,7 @@ Threat model and controls (details in [docs/SECURITY_MODEL.md](docs/SECURITY_MOD
 - Contributors **keep copyright**. ASPEC gets a perpetual, irrevocable, worldwide, non-exclusive, royalty-free, transferable, sublicensable copyright licence, a patent licence and an express right to relicense under any terms, including proprietary or commercial ones.
 - Differences from Harmony that need review are listed in [docs/LEGAL_REVIEW.md](docs/LEGAL_REVIEW.md). They include:
   - the broadened grant;
-  - removing the Option Five condition;
+  - a reworded Option Five condition (continued licensing under the Project's licence on the Submission Date);
   - Australian moral-rights consent instead of a waiver;
   - the governing-law State;
   - ACL carve-out;
