@@ -14,7 +14,7 @@ PactDock reads `.github/pactdock.json` (or the `config-path` input) from the **h
     "acceptedVersions": ["1.0"]
   },
   "entity": { "id": "aspec-ecla", "name": "...", "version": "1.0", "document": "..." },
-  "storage": { "repository": "aspec-racing/cla-signatures", "branch": "main", "directory": "signatures" },
+  "storage": { "repository": "ASPEC-RACING-PTY-LTD/cla-signatures", "branch": "main", "directory": "signatures" },
   "statusContext": "PactDock CLA",
   "allowlist": { "accountIds": [49699333] },
   "coAuthors": true,

@@ -44,7 +44,7 @@ jobs:
     runs-on: ubuntu-latest   # self-hosted runners work too (Node 24 capable)
     timeout-minutes: 5
     steps:
-      - uses: aspec-racing/pactdock@0000000000000000000000000000000000000000 # v1.0.0 - replace with a reviewed SHA
+      - uses: ASPEC-RACING-PTY-LTD/pactdock@0000000000000000000000000000000000000000 # v1.0.0 - replace with a reviewed SHA
         with:
           # Recommended: a GitHub App (see docs/SETUP.md).
           app-id: ${{ vars.PACTDOCK_APP_ID }}

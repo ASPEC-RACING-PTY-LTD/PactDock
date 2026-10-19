@@ -1,7 +1,7 @@
 // Small fetch-based GitHub REST/GraphQL client. No third-party dependencies.
 
 export const API_VERSION = "2022-11-28";
-const USER_AGENT = "PactDock (+https://github.com/aspec-racing/pactdock)";
+const USER_AGENT = "PactDock (+https://github.com/ASPEC-RACING-PTY-LTD/pactdock)";
 
 export class GitHubApiError extends Error {
   readonly status: number;

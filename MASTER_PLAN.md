@@ -110,7 +110,7 @@ Threat model and controls (details in [docs/SECURITY_MODEL.md](docs/SECURITY_MOD
 
 ## 6. Storage design
 
-- **Location:** a private repository (e.g. `aspec-racing/cla-signatures`) shared by every repository that uses the same agreements. The alternative is `"self"` with a dedicated branch.
+- **Location:** a private repository (e.g. `ASPEC-RACING-PTY-LTD/cla-signatures`) shared by every repository that uses the same agreements. The alternative is `"self"` with a dedicated branch.
 - **Layout:** one file per signer or entity, to avoid write races:
   - `signatures/individual/<agreementId>/<accountId>.json`, schema `pactdock/individual@1`.
   - `signatures/entity/<agreementId>/<slug>.json`, schema `pactdock/entity@1`, with `status` set to pending, active or revoked, plus `authorisedAccounts`.

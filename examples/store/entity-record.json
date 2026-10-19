@@ -14,16 +14,16 @@
       "version": "1.0",
       "documentPath": ".github/cla/ASPEC-ECLA-1.0.md",
       "documentSha256": "<sha256 of the agreement text>",
-      "documentUrl": "https://github.com/aspec-racing/project/blob/<commit>/.github/cla/ASPEC-ECLA-1.0.md",
+      "documentUrl": "https://github.com/ASPEC-RACING-PTY-LTD/project/blob/<commit>/.github/cla/ASPEC-ECLA-1.0.md",
       "signedAt": "2026-10-20T01:02:03Z",
       "recordedAt": "2026-10-20T01:02:10Z",
       "signer": { "id": 101, "login": "alice" },
       "evidence": {
         "method": "pull-request-comment",
-        "repository": "aspec-racing/project",
+        "repository": "ASPEC-RACING-PTY-LTD/project",
         "pullRequest": 7,
         "commentId": 1234567890,
-        "commentUrl": "https://github.com/aspec-racing/project/pull/7#issuecomment-1234567890"
+        "commentUrl": "https://github.com/ASPEC-RACING-PTY-LTD/project/pull/7#issuecomment-1234567890"
       }
     }
   ]

@@ -91,7 +91,7 @@ Create `.github/pactdock.json` on the default branch. Start from [`examples/pact
 Copy [`examples/workflows/pactdock.yml`](../examples/workflows/pactdock.yml) to `.github/workflows/pactdock.yml` on the **default branch**. Replace the placeholder with the full commit SHA of a PactDock release you have reviewed:
 
 ```yaml
-- uses: aspec-racing/pactdock@<40-character-sha> # v1.0.0
+- uses: ASPEC-RACING-PTY-LTD/pactdock@<40-character-sha> # v1.0.0
 ```
 
 Do **not** add `actions/checkout`. PactDock does not need the code, and checking out PR code in a `pull_request_target` workflow is the classic way these workflows get compromised.
