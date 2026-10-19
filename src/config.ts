@@ -17,13 +17,33 @@ export interface AgreementConfig {
   acceptedVersions: string[];
 }
 
-export interface StorageConfig {
+export interface GitHubStorageConfig {
+  type: "github";
   /** "owner/name" of the (preferably private) signature repository, or "self". */
   repository: string;
   /** Branch holding the records. Defaults to the store repository's default branch ("self" requires an explicit branch). */
   branch?: string;
   /** Directory within the store. */
   directory: string;
+}
+
+export interface S3StorageConfig {
+  type: "s3";
+  bucket: string;
+  /** "auto" for Cloudflare R2, otherwise an AWS region such as "ap-southeast-2". */
+  region: string;
+  /** Custom HTTPS endpoint (R2, other S3-compatible services). Omit for Amazon S3. */
+  endpoint?: string;
+  pathStyle?: boolean;
+  /** Key prefix within the bucket. */
+  directory: string;
+}
+
+export type StorageConfig = GitHubStorageConfig | S3StorageConfig;
+
+export interface DiscordConfig {
+  /** "notify": short message per signature. "signature": message plus the full record as a JSON attachment. */
+  mode: "notify" | "signature";
 }
 
 export interface Config {
@@ -39,6 +59,8 @@ export interface Config {
   comment: boolean;
   /** Optional URL with instructions for entity (company) agreements. */
   entityInstructionsUrl?: string;
+  /** Optional Discord logging. The webhook URL itself is a secret action input. */
+  discord?: DiscordConfig;
 }
 
 export class ConfigError extends Error {
@@ -131,26 +153,11 @@ export function parseConfig(text: string): Config {
   if (!isObject(raw)) throw new ConfigError("top level must be an object.");
   checkKeys(
     raw,
-    ["rightsHolder", "individual", "entity", "storage", "statusContext", "allowlist", "coAuthors", "committers", "comment", "entityInstructionsUrl"],
+    ["rightsHolder", "individual", "entity", "storage", "statusContext", "allowlist", "coAuthors", "committers", "comment", "entityInstructionsUrl", "discord"],
     "config",
   );
 
-  const storageRaw = raw["storage"];
-  if (!isObject(storageRaw)) throw new ConfigError("storage is required.");
-  checkKeys(storageRaw, ["repository", "branch", "directory"], "storage");
-  const repository = storageRaw["repository"];
-  if (typeof repository !== "string" || (repository !== "self" && !REPO_RE.test(repository))) {
-    throw new ConfigError('storage.repository must be "owner/name" or "self".');
-  }
-  const storage: StorageConfig = {
-    repository,
-    directory: str(storageRaw, "directory", "storage", PATH_RE, false) ?? "signatures",
-  };
-  const branch = str(storageRaw, "branch", "storage", BRANCH_RE, false);
-  if (branch) storage.branch = branch;
-  if (repository === "self" && !branch) {
-    throw new ConfigError('storage.branch is required when storage.repository is "self" (use a dedicated branch such as "pactdock-signatures").');
-  }
+  const storage = parseStorage(raw["storage"]);
 
   const allowRaw = raw["allowlist"] ?? {};
   if (!isObject(allowRaw)) throw new ConfigError("allowlist must be an object.");
@@ -176,5 +183,49 @@ export function parseConfig(text: string): Config {
   }
   const url = str(raw, "entityInstructionsUrl", "config", /^https:\/\/[^\s<>`]{1,500}$/, false);
   if (url) config.entityInstructionsUrl = url;
+  if (raw["discord"] !== undefined) {
+    const d = raw["discord"];
+    if (!isObject(d)) throw new ConfigError("discord must be an object.");
+    checkKeys(d, ["mode"], "discord");
+    const mode = d["mode"] ?? "notify";
+    if (mode !== "notify" && mode !== "signature") throw new ConfigError('discord.mode must be "notify" or "signature".');
+    config.discord = { mode };
+  }
   return config;
+}
+
+const BUCKET_RE = /^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$/;
+const REGION_RE = /^(auto|[a-z]{2}(-[a-z]+)+-\d)$/;
+const ENDPOINT_RE = /^https:\/\/[A-Za-z0-9.-]{1,253}(:\d{1,5})?\/?$/;
+
+function parseStorage(value: unknown): StorageConfig {
+  if (!isObject(value)) throw new ConfigError("storage is required.");
+  const type = value["type"] ?? "github";
+  const directory = str(value, "directory", "storage", PATH_RE, false) ?? "signatures";
+  if (type === "s3") {
+    checkKeys(value, ["type", "bucket", "region", "endpoint", "pathStyle", "directory"], "storage");
+    const s3: S3StorageConfig = {
+      type: "s3",
+      bucket: str(value, "bucket", "storage", BUCKET_RE, true),
+      region: str(value, "region", "storage", REGION_RE, true),
+      directory,
+    };
+    const endpoint = str(value, "endpoint", "storage", ENDPOINT_RE, false);
+    if (endpoint) s3.endpoint = endpoint.replace(/\/$/, "");
+    if (value["pathStyle"] !== undefined) s3.pathStyle = bool(value, "pathStyle", "storage", true);
+    return s3;
+  }
+  if (type !== "github") throw new ConfigError('storage.type must be "github" or "s3".');
+  checkKeys(value, ["type", "repository", "branch", "directory"], "storage");
+  const repository = value["repository"];
+  if (typeof repository !== "string" || (repository !== "self" && !REPO_RE.test(repository))) {
+    throw new ConfigError('storage.repository must be "owner/name" or "self".');
+  }
+  const storage: GitHubStorageConfig = { type: "github", repository, directory };
+  const branch = str(value, "branch", "storage", BRANCH_RE, false);
+  if (branch) storage.branch = branch;
+  if (repository === "self" && !branch) {
+    throw new ConfigError('storage.branch is required when storage.repository is "self" (use a dedicated branch such as "pactdock-signatures").');
+  }
+  return storage;
 }

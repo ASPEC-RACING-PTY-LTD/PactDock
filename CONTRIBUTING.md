@@ -1,6 +1,6 @@
 # Contributing to PactDock
 
-Thank you for helping. Before your pull request can be merged, you will be asked to accept the ASPEC Individual Contributor Licence Agreement (or your employer the Entity agreement).
+Thank you for helping. Before your pull request can be merged, you will be asked to accept the ASPEC Individual Contributor Agreement version 2.0 (or your employer the Entity agreement). Version 2.0 assigns the copyright in your contributions to ASPEC and licenses them back to you; see [`templates/cla/`](templates/cla).
 
 Ground rules:
 

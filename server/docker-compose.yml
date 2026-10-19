@@ -1,0 +1,56 @@
+# PactDock Server: docker compose -f server/docker-compose.yml up -d
+# Put it behind an HTTPS reverse proxy (Caddy, nginx, Traefik, Cloudflare Tunnel)
+# that GitHub can reach, and set PACTDOCK_PUBLIC_URL to that address.
+services:
+  pactdock:
+    build:
+      context: ..
+      dockerfile: server/Dockerfile
+    image: pactdock-server:local
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:8080"     # expose only to the reverse proxy
+    environment:
+      PACTDOCK_PUBLIC_URL: https://cla.example.com
+      PACTDOCK_TRUST_PROXY: "true"   # only when a reverse proxy sets X-Forwarded-For
+      PACTDOCK_MASTER_KEY_FILE: /run/secrets/pactdock_master_key
+      PACTDOCK_SETUP_TOKEN_FILE: /run/secrets/pactdock_setup_token
+      PACTDOCK_BACKUP_PASSPHRASE_FILE: /run/secrets/pactdock_backup_passphrase
+      PACTDOCK_BACKUP_INTERVAL_HOURS: "24"
+      PACTDOCK_BACKUP_DIR: /backups
+      # Optional email (signed copies and recovery links):
+      # PACTDOCK_SMTP_HOST: smtp.example.com
+      # PACTDOCK_SMTP_PORT: "587"
+      # PACTDOCK_SMTP_FROM: "PactDock <cla@example.com>"
+      # PACTDOCK_SMTP_USER_FILE: /run/secrets/smtp_user
+      # PACTDOCK_SMTP_PASS_FILE: /run/secrets/smtp_pass
+      # Optional S3 / Cloudflare R2 for signed documents (default: local /data):
+      # PACTDOCK_S3_BUCKET: example-cla-documents
+      # PACTDOCK_S3_REGION: auto
+      # PACTDOCK_S3_ENDPOINT: https://<ACCOUNT_ID>.r2.cloudflarestorage.com
+      # PACTDOCK_S3_ACCESS_KEY_ID_FILE: /run/secrets/s3_key_id
+      # PACTDOCK_S3_SECRET_ACCESS_KEY_FILE: /run/secrets/s3_secret
+    volumes:
+      - pactdock-data:/data
+      - ./backups:/backups
+    secrets:
+      - pactdock_master_key
+      - pactdock_setup_token
+      - pactdock_backup_passphrase
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  pactdock-data:
+
+secrets:
+  pactdock_master_key:
+    file: ./secrets/master_key          # openssl rand -base64 32 > secrets/master_key
+  pactdock_setup_token:
+    file: ./secrets/setup_token         # openssl rand -hex 16 > secrets/setup_token
+  pactdock_backup_passphrase:
+    file: ./secrets/backup_passphrase   # a long random passphrase, stored separately too

@@ -7,14 +7,16 @@
   "author": "ASPEC RACING PTY LTD",
   "type": "module",
   "engines": {
-    "node": ">=24"
+    "node": ">=24.16"
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
+    "build:server": "tsc -p server/tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "node --test --test-reporter=spec \"test/**/*.test.ts\"",
+    "test": "node --test --test-reporter=spec \"test/**/*.test.ts\" \"server/test/**/*.test.ts\"",
     "check-dist": "node scripts/check-dist.mjs",
-    "all": "npm run typecheck && npm test && npm run build && npm run check-dist"
+    "start": "node server/dist/server/src/main.js",
+    "all": "npm run typecheck && npm run build && npm run build:server && npm test && npm run check-dist"
   },
   "devDependencies": {
     "@types/node": "24.19.2",

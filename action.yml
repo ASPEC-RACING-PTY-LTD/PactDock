@@ -19,6 +19,18 @@ inputs:
   store-token:
     description: Fine-grained token with Contents read/write on the signature repository only. Alternative to a GitHub App.
     required: false
+  s3-access-key-id:
+    description: Access key ID for an S3/R2 signature store (storage.type "s3"). Falls back to AWS_ACCESS_KEY_ID, e.g. from OIDC.
+    required: false
+  s3-secret-access-key:
+    description: Secret access key for the S3/R2 store. Falls back to AWS_SECRET_ACCESS_KEY.
+    required: false
+  s3-session-token:
+    description: Optional session token for temporary S3 credentials. Falls back to AWS_SESSION_TOKEN.
+    required: false
+  discord-webhook-url:
+    description: Optional Discord webhook URL (store it as a secret) for signature notifications or copies. Logging only; never used to verify signatures.
+    required: false
   config-path:
     description: Path of the PactDock configuration file on the default branch.
     required: false

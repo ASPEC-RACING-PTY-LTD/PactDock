@@ -1,12 +1,17 @@
-// Signature records kept as JSON files in a Git repository. One file per
-// account (individual) or per entity keeps writes small and conflict-free, and
-// Git history provides the audit trail. PactDock only ever appends.
+// Write-once signature records. Each signature is one JSON file, created once
+// and never modified by PactDock:
+//
+//   <dir>/individual/<agreementId>/<version>/<accountId>.json
+//   <dir>/entity/<agreementId>/<entity-slug>.json   (maintainers activate these)
+//
+// Because a record is never rewritten, the signed terms of a record can never
+// change retroactively, and concurrent signers cannot overwrite each other.
 
 import type { AgreementConfig } from "./config.ts";
 import { entitySlug } from "./signing.ts";
-import { StoreConflictError, type Account, type StorePort } from "./types.ts";
+import type { Account, StorePort } from "./types.ts";
 
-export const INDIVIDUAL_SCHEMA = "pactdock/individual@1";
+export const INDIVIDUAL_SCHEMA = "pactdock/individual@2";
 export const ENTITY_SCHEMA = "pactdock/entity@1";
 
 export interface Evidence {
@@ -42,7 +47,7 @@ export interface SignatureEntry {
 export interface IndividualRecord {
   schema: typeof INDIVIDUAL_SCHEMA;
   account: Account;
-  signatures: SignatureEntry[];
+  signature: SignatureEntry;
 }
 
 export type EntityStatus = "pending" | "active" | "revoked";
@@ -66,8 +71,8 @@ export class RecordError extends Error {
   }
 }
 
-export function individualPath(directory: string, agreement: AgreementConfig, accountId: number): string {
-  return `${directory}/individual/${agreement.id}/${accountId}.json`;
+export function individualPath(directory: string, agreement: AgreementConfig, version: string, accountId: number): string {
+  return `${directory}/individual/${agreement.id}/${version}/${accountId}.json`;
 }
 
 export function entityDirectory(directory: string, agreement: AgreementConfig): string {
@@ -79,57 +84,56 @@ function isAccount(value: unknown): value is Account {
   return typeof v === "object" && v !== null && Number.isSafeInteger(v.id) && v.id > 0 && typeof v.login === "string";
 }
 
-function checkEntries(path: string, list: unknown): SignatureEntry[] {
-  if (!Array.isArray(list)) throw new RecordError(path, "signatures must be an array");
-  for (const entry of list as SignatureEntry[]) {
-    if (
-      typeof entry !== "object" ||
-      entry === null ||
-      typeof entry.agreementId !== "string" ||
-      typeof entry.version !== "string" ||
-      typeof entry.signedAt !== "string" ||
-      !isAccount(entry.signer) ||
-      typeof entry.evidence !== "object"
-    ) {
-      throw new RecordError(path, "malformed signature entry");
-    }
+function checkEntry(path: string, entry: SignatureEntry): SignatureEntry {
+  if (
+    typeof entry !== "object" ||
+    entry === null ||
+    typeof entry.agreementId !== "string" ||
+    typeof entry.version !== "string" ||
+    typeof entry.signedAt !== "string" ||
+    !isAccount(entry.signer) ||
+    typeof entry.evidence !== "object"
+  ) {
+    throw new RecordError(path, "malformed signature entry");
   }
-  return list as SignatureEntry[];
+  return entry;
 }
 
-export function parseIndividual(path: string, text: string, expectedId: number): IndividualRecord {
-  let raw: IndividualRecord;
+function parseJson<T>(path: string, text: string): T {
   try {
-    raw = JSON.parse(text) as IndividualRecord;
+    return JSON.parse(text) as T;
   } catch {
     throw new RecordError(path, "not valid JSON");
   }
+}
+
+export function parseIndividual(path: string, text: string, expectedId: number, agreement: AgreementConfig, version: string): IndividualRecord {
+  const raw = parseJson<IndividualRecord>(path, text);
   if (raw?.schema !== INDIVIDUAL_SCHEMA) throw new RecordError(path, "unknown schema");
   if (!isAccount(raw.account) || raw.account.id !== expectedId) throw new RecordError(path, "account does not match file name");
-  checkEntries(path, raw.signatures);
-  // A record may only contain the account's own signatures.
-  if (raw.signatures.some((s) => s.signer.id !== expectedId)) throw new RecordError(path, "contains a signature by another account");
+  checkEntry(path, raw.signature);
+  // A record may only hold the account's own signature for the agreement and version in its path.
+  if (raw.signature.signer.id !== expectedId) throw new RecordError(path, "contains a signature by another account");
+  if (raw.signature.agreementId !== agreement.id || raw.signature.version !== version) {
+    throw new RecordError(path, "agreement or version does not match its location");
+  }
   return raw;
 }
 
 export function parseEntity(path: string, text: string): EntityRecord {
-  let raw: EntityRecord;
-  try {
-    raw = JSON.parse(text) as EntityRecord;
-  } catch {
-    throw new RecordError(path, "not valid JSON");
-  }
+  const raw = parseJson<EntityRecord>(path, text);
   if (raw?.schema !== ENTITY_SCHEMA) throw new RecordError(path, "unknown schema");
   if (typeof raw.entityName !== "string" || !raw.entityName) throw new RecordError(path, "entityName missing");
   if (!["pending", "active", "revoked"].includes(raw.status)) throw new RecordError(path, "status must be pending, active or revoked");
   if (!Array.isArray(raw.authorisedAccounts) || !raw.authorisedAccounts.every(isAccount)) {
     throw new RecordError(path, "authorisedAccounts must be a list of {id, login}");
   }
-  checkEntries(path, raw.signatures);
+  if (!Array.isArray(raw.signatures)) throw new RecordError(path, "signatures must be an array");
+  raw.signatures.forEach((s) => checkEntry(path, s));
   return raw;
 }
 
-/** True if the record holds a signature for one of the accepted versions of this agreement. */
+/** True if the signatures include one for an accepted version of this agreement. */
 export function hasValidSignature(signatures: SignatureEntry[], agreement: AgreementConfig): SignatureEntry | null {
   return signatures.find((s) => s.agreementId === agreement.id && agreement.acceptedVersions.includes(s.version)) ?? null;
 }
@@ -148,10 +152,14 @@ export class SignatureStore {
     return this.#port.label;
   }
 
-  async getIndividual(agreement: AgreementConfig, accountId: number): Promise<IndividualRecord | null> {
-    const path = individualPath(this.#directory, agreement, accountId);
-    const file = await this.#port.read(path);
-    return file ? parseIndividual(path, file.text, accountId) : null;
+  /** The account's signature for the newest accepted version that has one, or null. */
+  async getIndividual(agreement: AgreementConfig, accountId: number): Promise<SignatureEntry | null> {
+    for (const version of [...agreement.acceptedVersions].reverse()) {
+      const path = individualPath(this.#directory, agreement, version, accountId);
+      const file = await this.#port.read(path);
+      if (file) return parseIndividual(path, file.text, accountId, agreement, version).signature;
+    }
+    return null;
   }
 
   /** All entity records for an agreement (any status). Invalid files fail closed. */
@@ -172,61 +180,30 @@ export class SignatureStore {
     return records;
   }
 
-  /**
-   * Appends an individual signature. Idempotent per comment ID. Retries on
-   * concurrent modification and never rewrites existing entries.
-   */
-  async appendIndividual(agreement: AgreementConfig, account: Account, entry: SignatureEntry, message: string): Promise<"recorded" | "duplicate"> {
-    const path = individualPath(this.#directory, agreement, account.id);
-    return this.#append(path, message, (text) => {
-      const record: IndividualRecord = text
-        ? parseIndividual(path, text, account.id)
-        : { schema: INDIVIDUAL_SCHEMA, account, signatures: [] };
-      if (isDuplicate(record.signatures, entry)) return null;
-      record.account = account; // keep the latest observed login
-      record.signatures.push(entry);
-      return record;
-    });
+  /** Records an individual signature for the agreement's current version, exactly once. */
+  async recordIndividual(agreement: AgreementConfig, account: Account, entry: SignatureEntry, message: string): Promise<"recorded" | "duplicate"> {
+    const path = individualPath(this.#directory, agreement, agreement.version, account.id);
+    const record: IndividualRecord = { schema: INDIVIDUAL_SCHEMA, account, signature: entry };
+    const result = await this.#port.create(path, JSON.stringify(record, null, 2) + "\n", message);
+    return result === "created" ? "recorded" : "duplicate";
   }
 
   /**
-   * Appends an entity signature. New entities start as "pending" until a
-   * maintainer verifies the signatory's authority and sets status "active".
+   * Creates a pending entity record. Coverage starts only when a maintainer
+   * verifies the signatory's authority and sets status "active". If a record
+   * for the entity already exists, nothing is changed.
    */
-  async appendEntity(agreement: AgreementConfig, entityName: string, entry: SignatureEntry, message: string): Promise<"recorded" | "duplicate"> {
+  async recordEntity(agreement: AgreementConfig, entityName: string, entry: SignatureEntry, message: string): Promise<"recorded" | "duplicate"> {
     const path = `${entityDirectory(this.#directory, agreement)}/${entitySlug(entityName)}.json`;
     this.#entityCache = null;
-    return this.#append(path, message, (text) => {
-      const record: EntityRecord = text
-        ? parseEntity(path, text)
-        : { schema: ENTITY_SCHEMA, entityName, status: "pending", signatures: [], authorisedAccounts: [] };
-      if (record.entityName.toLowerCase() !== entityName.toLowerCase()) {
-        throw new Error(`An entity record named "${record.entityName}" already uses the identifier for "${entityName}". A maintainer must resolve this.`);
-      }
-      if (isDuplicate(record.signatures, entry)) return null;
-      record.signatures.push(entry);
-      // Proposed only: coverage starts when a maintainer sets status "active".
-      if (!record.authorisedAccounts.some((a) => a.id === entry.signer.id)) record.authorisedAccounts.push(entry.signer);
-      return record;
-    });
+    const record: EntityRecord = {
+      schema: ENTITY_SCHEMA,
+      entityName,
+      status: "pending",
+      signatures: [entry],
+      authorisedAccounts: [entry.signer],
+    };
+    const result = await this.#port.create(path, JSON.stringify(record, null, 2) + "\n", message);
+    return result === "created" ? "recorded" : "duplicate";
   }
-
-  async #append(path: string, message: string, update: (text: string | null) => object | null): Promise<"recorded" | "duplicate"> {
-    for (let attempt = 1; attempt <= 4; attempt++) {
-      const file = await this.#port.read(path);
-      const next = update(file?.text ?? null);
-      if (!next) return "duplicate";
-      try {
-        await this.#port.write(path, JSON.stringify(next, null, 2) + "\n", file?.sha ?? null, message);
-        return "recorded";
-      } catch (err) {
-        if (!(err instanceof StoreConflictError) || attempt === 4) throw err;
-      }
-    }
-    throw new Error("unreachable");
-  }
-}
-
-function isDuplicate(existing: SignatureEntry[], entry: SignatureEntry): boolean {
-  return entry.evidence.commentId !== undefined && existing.some((s) => s.evidence.commentId === entry.evidence.commentId);
 }

@@ -11,6 +11,10 @@ import { COMMENT_MARKER, renderComment, statusDescription, type DocumentLinks } 
 import { parseComment } from "./signing.ts";
 import { SignatureStore, type SignatureEntry } from "./store.ts";
 import type { Account, RepoPort, StorePort } from "./types.ts";
+import type { SignatureEvent } from "./discord.ts";
+
+/** Optional hook called after a signature is recorded (e.g. Discord logging). Must not throw. */
+export type SignatureNotifier = (event: SignatureEvent, config: Config) => Promise<void>;
 
 export const MAX_COMMITS = 250;
 export const MAX_SWEEP = 100;
@@ -54,11 +58,20 @@ export class PactDock {
   readonly #makeStore: (storage: StorageConfig) => Promise<StorePort>;
   readonly #log: Logger;
   readonly #now: () => Date;
+  readonly #notify: SignatureNotifier | undefined;
   /** Head SHA currently being evaluated, so failures can be reported on it (fail closed). */
   currentSha: string | null = null;
   config: Config | null = null;
 
-  constructor(ctx: Context, repo: RepoPort, makeStore: (storage: StorageConfig) => Promise<StorePort>, log: Logger, now: () => Date = () => new Date()) {
+  constructor(
+    ctx: Context,
+    repo: RepoPort,
+    makeStore: (storage: StorageConfig) => Promise<StorePort>,
+    log: Logger,
+    now: () => Date = () => new Date(),
+    notify?: SignatureNotifier,
+  ) {
+    this.#notify = notify;
     this.#ctx = ctx;
     this.#repo = repo;
     this.#makeStore = makeStore;
@@ -258,19 +271,24 @@ export class PactDock {
     const where = `${this.#repo.owner}/${this.#repo.repo}#${number}`;
     const result =
       intent.kind === "entity"
-        ? await setup.store.appendEntity(
+        ? await setup.store.recordEntity(
             agreement,
             intent.entityName,
             entry,
             `PactDock: entity ${agreement.id} v${agreement.version} for "${intent.entityName}" signed by @${signer.login} (${signer.id}) via ${where}`,
           )
-        : await setup.store.appendIndividual(
+        : await setup.store.recordIndividual(
             agreement,
             signer,
             entry,
             `PactDock: ${agreement.id} v${agreement.version} signed by @${signer.login} (${signer.id}) via ${where}`,
           );
     this.#log.info(`Signature ${result} for @${signer.login} (${signer.id}) in ${setup.store.label}.`);
+    if (result === "recorded" && this.#notify) {
+      const event: SignatureEvent = { kind: intent.kind, entry, recordJson: JSON.stringify(entry, null, 2), storeLabel: setup.store.label };
+      if (intent.kind === "entity") event.entityName = intent.entityName;
+      await this.#notify(event, config);
+    }
     await this.#repo.addReaction(comment.id, "+1");
 
     const outcome = await this.#single(setup, number);

@@ -31,4 +31,21 @@ jobs:
       - run: npm ci --ignore-scripts
       - run: npm run typecheck
       - run: npm run check-dist
+      - run: npm run build:server
       - run: npm test
+
+  docker:
+    name: Server image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: docker build -f server/Dockerfile -t pactdock-server:ci .
+      - name: Smoke test (hardened run)
+        run: |
+          docker run -d --name pd --read-only --tmpfs /tmp --cap-drop ALL --security-opt no-new-privileges -p 127.0.0.1:8080:8080 -e PACTDOCK_PUBLIC_URL=http://localhost:8080 pactdock-server:ci
+          for i in $(seq 1 20); do curl -fsS http://127.0.0.1:8080/healthz && break; sleep 1; done
+          curl -fsS http://127.0.0.1:8080/healthz
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8080/setup)" = 403
+          docker logs pd

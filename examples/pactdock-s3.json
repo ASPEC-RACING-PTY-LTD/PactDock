@@ -1,0 +1,19 @@
+{
+  "$comment": "PactDock Lite with signatures in Cloudflare R2 and copies posted to Discord. Credentials come from the s3-* and discord-webhook-url inputs.",
+  "rightsHolder": "Example Pty Ltd",
+  "individual": {
+    "id": "example-icla",
+    "name": "Example Individual Contributor Licence Agreement",
+    "version": "1.0",
+    "document": ".github/cla/ICLA-1.0.md"
+  },
+  "storage": {
+    "type": "s3",
+    "bucket": "example-cla-signatures",
+    "region": "auto",
+    "endpoint": "https://0123456789abcdef0123456789abcdef.r2.cloudflarestorage.com",
+    "directory": "signatures"
+  },
+  "discord": { "mode": "signature" },
+  "allowlist": { "accountIds": [49699333, 41898282] }
+}

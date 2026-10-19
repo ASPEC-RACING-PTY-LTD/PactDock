@@ -67,23 +67,18 @@ export interface RepoPort {
 
 export interface StoredFile {
   text: string;
-  /** Blob SHA used for optimistic concurrency on write. */
-  sha: string;
 }
 
+/**
+ * Write-once signature storage. Records are created exactly once and never
+ * modified by PactDock, so no locking or merge logic is needed.
+ */
 export interface StorePort {
-  /** Human-readable location, e.g. "aspec/cla-signatures@main". */
+  /** Human-readable location, e.g. "aspec/cla-signatures@main" or "s3://bucket". */
   readonly label: string;
   read(path: string): Promise<StoredFile | null>;
   /** Lists file names (not directories) directly inside a directory. */
   list(directory: string): Promise<string[]>;
-  /** Creates (sha null) or updates a file. Throws StoreConflictError if sha is stale. */
-  write(path: string, text: string, sha: string | null, message: string): Promise<void>;
-}
-
-export class StoreConflictError extends Error {
-  constructor(path: string) {
-    super(`Concurrent modification of ${path} in the signature store.`);
-    this.name = "StoreConflictError";
-  }
+  /** Creates a file only if it does not exist yet. */
+  create(path: string, text: string, message: string): Promise<"created" | "exists">;
 }

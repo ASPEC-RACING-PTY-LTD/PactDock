@@ -20,10 +20,12 @@ export class PactDock {
     #makeStore;
     #log;
     #now;
+    #notify;
     /** Head SHA currently being evaluated, so failures can be reported on it (fail closed). */
     currentSha = null;
     config = null;
-    constructor(ctx, repo, makeStore, log, now = () => new Date()) {
+    constructor(ctx, repo, makeStore, log, now = () => new Date(), notify) {
+        this.#notify = notify;
         this.#ctx = ctx;
         this.#repo = repo;
         this.#makeStore = makeStore;
@@ -225,9 +227,15 @@ export class PactDock {
         };
         const where = `${this.#repo.owner}/${this.#repo.repo}#${number}`;
         const result = intent.kind === "entity"
-            ? await setup.store.appendEntity(agreement, intent.entityName, entry, `PactDock: entity ${agreement.id} v${agreement.version} for "${intent.entityName}" signed by @${signer.login} (${signer.id}) via ${where}`)
-            : await setup.store.appendIndividual(agreement, signer, entry, `PactDock: ${agreement.id} v${agreement.version} signed by @${signer.login} (${signer.id}) via ${where}`);
+            ? await setup.store.recordEntity(agreement, intent.entityName, entry, `PactDock: entity ${agreement.id} v${agreement.version} for "${intent.entityName}" signed by @${signer.login} (${signer.id}) via ${where}`)
+            : await setup.store.recordIndividual(agreement, signer, entry, `PactDock: ${agreement.id} v${agreement.version} signed by @${signer.login} (${signer.id}) via ${where}`);
         this.#log.info(`Signature ${result} for @${signer.login} (${signer.id}) in ${setup.store.label}.`);
+        if (result === "recorded" && this.#notify) {
+            const event = { kind: intent.kind, entry, recordJson: JSON.stringify(entry, null, 2), storeLabel: setup.store.label };
+            if (intent.kind === "entity")
+                event.entityName = intent.entityName;
+            await this.#notify(event, config);
+        }
         await this.#repo.addReaction(comment.id, "+1");
         const outcome = await this.#single(setup, number);
         return { ...outcome, result: outcome.result === "passed" ? "passed" : "signed" };

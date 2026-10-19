@@ -139,8 +139,8 @@ test("e2e: compiled action fails an unsigned PR then passes after signing", { sk
     });
     assert.equal(second.code, 0, second.stdout);
     assert.match(second.output, /result<<\S+\r?\npassed\r?\n/);
-    const record = JSON.parse(store.get("signatures/individual/aspec-icla/101.json")!);
-    assert.equal(record.signatures[0].evidence.commentId, 55);
+    const record = JSON.parse(store.get("signatures/individual/aspec-icla/1.0/101.json")!);
+    assert.equal(record.signature.evidence.commentId, 55);
     assert.equal(requests.filter((r) => r.url.includes("/statuses/")).at(-1)?.body.state, "success");
   } finally {
     server.close();

@@ -2,7 +2,6 @@
 
 import { GitHubApiError, Http } from "./http.ts";
 import {
-  StoreConflictError,
   type Account,
   type CommitInfo,
   type GitIdentity,
@@ -219,7 +218,7 @@ export class GitHubStore implements StorePort {
     const content = await readContent(this.#http, this.#base, path, this.#branch);
     if (!content) return null;
     if (Array.isArray(content)) throw new Error(`${path} is a directory.`);
-    return { text: decodeFile(content, path).toString("utf8"), sha: content.sha };
+    return { text: decodeFile(content, path).toString("utf8") };
   }
 
   async list(directory: string): Promise<string[]> {
@@ -229,17 +228,18 @@ export class GitHubStore implements StorePort {
     return content.filter((c) => c.type === "file").map((c) => c.name);
   }
 
-  async write(path: string, text: string, sha: string | null, message: string): Promise<void> {
+  async create(path: string, text: string, message: string): Promise<"created" | "exists"> {
     const body: Record<string, string> = { message, content: Buffer.from(text, "utf8").toString("base64") };
-    if (sha) body["sha"] = sha;
     if (this.#branch) body["branch"] = this.#branch;
     try {
+      // No blob sha supplied: GitHub refuses to overwrite an existing file.
       await this.#http.request("PUT", `${this.#base}/contents/${encPath(path)}`, { body });
+      return "created";
     } catch (err) {
-      // 409, or 422 complaining about the blob sha, means someone else wrote first.
-      // Other 422s (e.g. a missing branch) are real errors and must surface as such.
+      // 422 complaining about the missing sha means the file already exists; 409 is a
+      // concurrent create. Other errors (e.g. a missing branch) must surface.
       if (err instanceof GitHubApiError && (err.status === 409 || (err.status === 422 && /sha/i.test(err.message)))) {
-        throw new StoreConflictError(path);
+        if (await this.read(path)) return "exists";
       }
       throw err;
     }

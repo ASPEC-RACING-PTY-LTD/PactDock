@@ -1,7 +1,6 @@
 // In-memory fakes of the GitHub ports used by PactDock.
 
 import {
-  StoreConflictError,
   type CommitInfo,
   type IssueComment,
   type PullRequest,
@@ -11,7 +10,6 @@ import {
   type StoredFile,
   type StorePort,
 } from "../src/types.ts";
-import { createHash } from "node:crypto";
 
 export interface Status {
   sha: string;
@@ -106,8 +104,6 @@ export class FakeStore implements StorePort {
   readonly label = "aspec/cla-signatures@main";
   files = new Map<string, StoredFile>();
   writes: { path: string; message: string }[] = [];
-  /** Number of upcoming writes that should fail with a conflict. */
-  conflicts = 0;
 
   async read(path: string) {
     return this.files.get(path) ?? null;
@@ -116,19 +112,14 @@ export class FakeStore implements StorePort {
     const prefix = directory.endsWith("/") ? directory : directory + "/";
     return [...this.files.keys()].filter((p) => p.startsWith(prefix) && !p.slice(prefix.length).includes("/")).map((p) => p.slice(prefix.length));
   }
-  async write(path: string, text: string, sha: string | null, message: string) {
-    const current = this.files.get(path);
-    if (this.conflicts > 0) {
-      this.conflicts--;
-      throw new StoreConflictError(path);
-    }
-    if ((current?.sha ?? null) !== sha) throw new StoreConflictError(path);
-    this.files.set(path, { text, sha: createHash("sha1").update(text).digest("hex") });
+  async create(path: string, text: string, message: string): Promise<"created" | "exists"> {
+    if (this.files.has(path)) return "exists";
+    this.files.set(path, { text });
     this.writes.push({ path, message });
+    return "created";
   }
   put(path: string, value: unknown) {
-    const text = JSON.stringify(value);
-    this.files.set(path, { text, sha: createHash("sha1").update(text).digest("hex") });
+    this.files.set(path, { text: JSON.stringify(value) });
   }
   json(path: string): any {
     const f = this.files.get(path);

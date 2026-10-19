@@ -52,7 +52,7 @@ test("config: unknown keys, bad values and path traversal are rejected", () => {
 
 test("config: self storage with a branch is accepted", () => {
   const c = parseConfig(JSON.stringify({ ...minimal, storage: { repository: "self", branch: "pactdock-signatures" } }));
-  assert.equal(c.storage.branch, "pactdock-signatures");
+  assert.equal((c.storage as { branch?: string }).branch, "pactdock-signatures");
 });
 
 // ---------- signing ----------
@@ -234,13 +234,13 @@ test("examples: bundled configuration files are valid", () => {
 
 // ---------- GitHub adapters ----------
 
-test("github: store maps sha conflicts but surfaces other 422s", async () => {
+test("github: store create never overwrites and surfaces other 422s", async () => {
   const { GitHubStore } = await import("../src/github.ts");
-  const { StoreConflictError } = await import("../src/types.ts");
-  const mk = (r: Response) => new GitHubStore(new Http({ ...httpBase, token: "t", fetchImpl: fakeFetch([r]) }), "o", "s", "main");
-  await assert.rejects(mk(new Response('{"message":"x"}', { status: 409 })).write("a.json", "{}", null, "m"), StoreConflictError);
-  await assert.rejects(mk(new Response('{"message":"sha wasn\'t supplied"}', { status: 422 })).write("a.json", "{}", null, "m"), StoreConflictError);
-  await assert.rejects(mk(new Response('{"message":"Branch main not found"}', { status: 422 })).write("a.json", "{}", null, "m"), /Branch main not found/);
+  const mk = (...r: Response[]) => new GitHubStore(new Http({ ...httpBase, token: "t", fetchImpl: fakeFetch(r) }), "o", "s", "main");
+  assert.equal(await mk(new Response("{}", { status: 201 })).create("a.json", "{}", "m"), "created");
+  const existing = new Response(JSON.stringify({ type: "file", encoding: "base64", content: "e30=", sha: "x", name: "a.json" }));
+  assert.equal(await mk(new Response('{"message":"sha wasn\'t supplied"}', { status: 422 }), existing).create("a.json", "{}", "m"), "exists");
+  await assert.rejects(mk(new Response('{"message":"Branch main not found"}', { status: 422 })).create("a.json", "{}", "m"), /Branch main not found/);
 });
 
 test("github: PR commits parsed from GraphQL, co-authors kept in order", async () => {

@@ -8,8 +8,7 @@ export async function evaluate(config, set, store) {
             covered.push({ ...contributor, coverage: { kind: "allowlisted" } });
             continue;
         }
-        const record = await store.getIndividual(config.individual, contributor.id);
-        const individual = record ? hasValidSignature(record.signatures, config.individual) : null;
+        const individual = await store.getIndividual(config.individual, contributor.id);
         if (individual) {
             covered.push({ ...contributor, coverage: { kind: "individual", version: individual.version } });
             continue;

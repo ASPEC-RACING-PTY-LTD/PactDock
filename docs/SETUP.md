@@ -1,4 +1,6 @@
-# Setting up PactDock
+# Setting up PactDock Lite
+
+This guide covers **PactDock Lite**, the GitHub Action. For the self-hosted PactDock Server, with a signing portal and admin UI, see [SERVER.md](SERVER.md).
 
 Setup takes about 15 minutes. You need admin access to the repositories (or organisation) you want to protect.
 
@@ -50,6 +52,10 @@ git push origin pactdock-signatures
 ```
 
 Records on that branch are as visible as the repository itself. Do not use self storage on a public repository unless you are comfortable publishing signers' GitHub IDs and comments.
+
+**Alternative: Amazon S3 or Cloudflare R2.** Set `"storage": { "type": "s3", ... }` and pass the `s3-*` inputs from secrets. Protect the bucket with an R2 bucket lock or an S3 policy without `DeleteObject`. See [CONFIGURATION.md](CONFIGURATION.md#s3-and-cloudflare-r2) and [`examples/pactdock-s3.json`](../examples/pactdock-s3.json). With S3 the PR repository needs no store token at all, so `GITHUB_TOKEN` is enough for statuses and comments.
+
+Optionally, copies or notifications can go to a Discord channel (`"discord"` in the config). Discord is only a log. One of the stores above is always required.
 
 ## 3. Choose authentication
 
@@ -149,3 +155,5 @@ You can also create entity records by hand from a signed paper agreement. Use `"
    - To keep them valid, set `"acceptedVersions": ["1.0", "2.0"]`.
    - To require everyone to re-sign, leave `acceptedVersions` out.
 4. Run a manual recheck of open PRs.
+
+Existing records are never changed. Each signature of the new version is a new file under `individual/<agreement>/<version>/`, so the terms each person accepted stay on record. Keep the old document in the repository too.

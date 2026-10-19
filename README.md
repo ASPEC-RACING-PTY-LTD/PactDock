@@ -1,43 +1,42 @@
 # PactDock
 
-**Self-contained Contributor Licence Agreement (CLA) enforcement for GitHub.** It needs no servers, subscriptions, databases or external CLA service. Signatures are stored in a GitHub repository you control.
+**Self-hosted Contributor Licence Agreement (CLA) enforcement for GitHub.** No subscription, no external CLA service and nothing hosted by ASPEC: you run it, you own the records.
 
 PactDock is owned by **ASPEC RACING PTY LTD** (Australia). It is free and source-available for anyone to use on their own repositories, under the [PolyForm Shield License 1.0.0](LICENSE.md).
 
-## How it works
+## Two editions
 
-1. A pull request is opened or updated. PactDock reads the PR metadata through the API; it never checks out or runs PR code. It works out every contributor by **numeric GitHub account ID**: the PR author, each commit author, and each `Co-authored-by:` identity.
-2. Contributors without a valid signature get a ❌ `PactDock CLA` status and one comment with instructions.
-3. Each contributor posts the exact acceptance phrase as a new comment, for example:
+| | **PactDock Server** (recommended) | **PactDock Lite** |
+| --- | --- | --- |
+| Runs as | A Docker container you host | A GitHub Action in your workflows |
+| Signing | Contributors sign in with GitHub, review the exact agreement, type or draw a signature and download a signed copy | Contributors post an exact acceptance phrase as a PR comment |
+| Records | Immutable, hash-chained SQLite records and write-once signed documents (local disk or S3/R2), encrypted backups | Write-once JSON in a private GitHub repository or an S3/R2 bucket, optional Discord copies |
+| GitHub access | Your own GitHub App, created in one click from the setup page. Checks, pull requests and metadata only: **no source-code access** | The workflow token, or your own App or token for the store |
+| Management | Admin portal: repositories, agreements and immutable versions, signatures, entities, admins, audit log, integrity check | A JSON config file |
+| Guide | [docs/SERVER.md](docs/SERVER.md) | [docs/SETUP.md](docs/SETUP.md) |
 
-   ```text
-   I have read and agree to the ASPEC Individual Contributor Licence Agreement version 1.0.
-   ```
+Both editions:
 
-4. PactDock verifies that the comment really came from that account and has not been edited. It then appends a signed record to your **private signature repository**. The record holds the account ID, timestamps, agreement version, document SHA-256 and permalink, the exact comment text and its hash, and a link to the run.
-5. The status turns ✅. Because the status is a **required check** in your ruleset, unsigned PRs cannot be merged.
+- identify people by **numeric GitHub account ID**, covering the PR author, commit authors and `Co-authored-by` identities;
+- support individual and entity (company) agreements, with entities active only after an admin verifies them;
+- report a required `PactDock CLA` check for rulesets, so unsigned PRs cannot be merged;
+- **fail closed** on anything they cannot verify, and never check out or run PR code;
+- never change signed terms: every agreement version and signature record is write-once;
+- have **zero runtime npm dependencies** (Node 24 built-ins only).
 
-Entity (company) agreements are signed by an authorised signatory in the same way. They take effect once a maintainer verifies the signatory and lists the authorised contributor IDs.
+## Quick start: Server
 
-## Highlights
+1. Create the secrets and set `PACTDOCK_PUBLIC_URL` in [`server/docker-compose.yml`](server/docker-compose.yml).
+2. Run `docker compose -f server/docker-compose.yml up -d --build` behind an HTTPS reverse proxy.
+3. Open the setup link, create your GitHub App and install it on your repositories.
+4. Publish your agreement in the admin portal, enable the repositories, and require the `PactDock CLA` check in a ruleset with your App as the source.
 
-- **Secure by default.**
-  - No checkout; workflows always come from the default branch.
-  - Least-privilege, repository-scoped GitHub App tokens.
-  - ID-based identity, and edit-proof signing.
-  - Fails closed on anything it cannot verify.
-- **Lightweight.**
-  - One Node 24 action with **zero runtime dependencies**, under 2,000 lines of TypeScript.
-  - Works on GitHub-hosted and self-hosted runners, and on GitHub Enterprise Server (via `GITHUB_API_URL`).
-- **Auditable.** The store is append-only JSON in Git, so every signature is a commit.
-- **Configurable.** Your own agreements, rights holder, versions, document hash pins, store location and bot allowlist.
-
-## Quick start
+## Quick start: Lite
 
 1. Add your agreement text, e.g. `.github/cla/ICLA-1.0.md`.
-2. Create a **private** repository for signatures, e.g. `your-org/cla-signatures`.
+2. Create a **private** repository for signatures, e.g. `your-org/cla-signatures`, or an S3/R2 bucket.
 3. Create a GitHub App, or a fine-grained token for the store ([setup guide](docs/SETUP.md#3-choose-authentication)).
-4. Add `.github/pactdock.json` ([example](examples/pactdock.json), [reference](docs/CONFIGURATION.md)).
+4. Add `.github/pactdock.json` ([example](examples/pactdock.json), [S3/R2 example](examples/pactdock-s3.json), [reference](docs/CONFIGURATION.md)).
 5. Add `.github/workflows/pactdock.yml` ([example](examples/workflows/pactdock.yml)), pinned to a reviewed commit SHA.
 6. In **Settings → Rules → Rulesets**, require the `PactDock CLA` status, with the source set to your App ([details](docs/SETUP.md#6-require-the-check-block-unsigned-merges)).
 
@@ -45,11 +44,12 @@ Entity (company) agreements are signed by an authorised signatory in the same wa
 
 | Document | Contents |
 | --- | --- |
-| [docs/SETUP.md](docs/SETUP.md) | Step-by-step setup, rulesets, entity agreements, version changes |
+| [docs/SERVER.md](docs/SERVER.md) | PactDock Server: Docker, GitHub App setup, agreements, signing, backups, environment variables |
+| [docs/SETUP.md](docs/SETUP.md) | PactDock Lite: step-by-step setup, rulesets, entity agreements, version changes |
 | [docs/CONFIGURATION.md](docs/CONFIGURATION.md) | Every config key, input, output and record format |
 | [docs/SECURITY_MODEL.md](docs/SECURITY_MODEL.md) | Threat model, controls, residual risks |
 | [MASTER_PLAN.md](MASTER_PLAN.md) | Architecture, research, roadmap, testing |
-| [templates/cla/](templates/cla) | ASPEC Individual and Entity CLAs (modelled on Harmony) |
+| [templates/cla/](templates/cla) | ASPEC agreements: v1.0 licence and v2.0 assignment, individual and entity (modelled on Harmony) |
 | [docs/LICENSING.md](docs/LICENSING.md) | Why PolyForm Shield was chosen, and the remaining open items |
 
 ## Development
@@ -65,8 +65,8 @@ npm run all
 `npm run all` runs, in order:
 
 - typecheck;
-- the unit, integration and end-to-end tests;
-- the build to `dist/`;
+- the Lite build to `dist/` and the Server build to `server/dist/`;
+- the Lite and Server unit, integration and end-to-end tests;
 - a check that `dist/` matches `src/`.
 
 Commit `dist/` together with any change to `src/`.

@@ -6,7 +6,9 @@ import { createInstallationToken } from "./app-auth.ts";
 import type { StorageConfig } from "./config.ts";
 import { GitHubRepo, GitHubStore } from "./github.ts";
 import { Http } from "./http.ts";
-import { PactDock, type Context } from "./pactdock.ts";
+import { PactDock, type Context, type SignatureNotifier } from "./pactdock.ts";
+import { S3Store } from "./s3-store.ts";
+import { isDiscordWebhookUrl, postToDiscord } from "./discord.ts";
 import { appendSummary, getInput, log, setOutput, setSecret } from "./runtime.ts";
 
 export async function main(env: NodeJS.ProcessEnv = process.env): Promise<number> {
@@ -27,8 +29,11 @@ export async function main(env: NodeJS.ProcessEnv = process.env): Promise<number
     const appId = getInput("app-id", env);
     const appKey = getInput("app-private-key", env);
     const storeToken = getInput("store-token", env);
-    if (appKey) setSecret(appKey);
-    if (storeToken) setSecret(storeToken);
+    const s3KeyId = getInput("s3-access-key-id", env) || env["AWS_ACCESS_KEY_ID"] || "";
+    const s3Secret = getInput("s3-secret-access-key", env) || env["AWS_SECRET_ACCESS_KEY"] || "";
+    const s3Session = getInput("s3-session-token", env) || env["AWS_SESSION_TOKEN"] || "";
+    const discordUrl = getInput("discord-webhook-url", env);
+    for (const secret of [appKey, storeToken, s3Secret, s3Session, discordUrl]) if (secret) setSecret(secret);
     if (Boolean(appId) !== Boolean(appKey)) throw new Error("app-id and app-private-key must be supplied together.");
 
     let repoToken = githubToken;
@@ -44,6 +49,19 @@ export async function main(env: NodeJS.ProcessEnv = process.env): Promise<number
     if (!repoToken) throw new Error("No GitHub token available: set github-token (default) or app-id/app-private-key.");
 
     const makeStore = async (storage: StorageConfig) => {
+      if (storage.type === "s3") {
+        if (!s3KeyId || !s3Secret) {
+          throw new Error("No credentials for the S3/R2 signature store: supply s3-access-key-id and s3-secret-access-key (or AWS_* environment variables).");
+        }
+        const credentials = { accessKeyId: s3KeyId, secretAccessKey: s3Secret, ...(s3Session ? { sessionToken: s3Session } : {}) };
+        return new S3Store({
+          bucket: storage.bucket,
+          region: storage.region,
+          ...(storage.endpoint ? { endpoint: storage.endpoint } : {}),
+          ...(storage.pathStyle !== undefined ? { pathStyle: storage.pathStyle } : {}),
+          credentials,
+        });
+      }
       const self = storage.repository === "self";
       const [storeOwner, storeRepo] = self ? [owner, repo] : (storage.repository.split("/") as [string, string]);
       let token = storeToken;
@@ -71,7 +89,20 @@ export async function main(env: NodeJS.ProcessEnv = process.env): Promise<number
       ctx.pullRequest = Number(prInput);
     }
 
-    pactdock = new PactDock(ctx, new GitHubRepo(new Http({ ...http, token: repoToken }), owner, repo), makeStore, log);
+    // Discord is optional logging only; a failure to post never changes the check result.
+    let notifier: SignatureNotifier | undefined;
+    if (discordUrl) {
+      if (!isDiscordWebhookUrl(discordUrl)) throw new Error("discord-webhook-url is not a valid Discord webhook URL.");
+      notifier = async (event, config) => {
+        try {
+          await postToDiscord(discordUrl, config.discord?.mode ?? "notify", event);
+        } catch (err) {
+          log.warning(`Discord logging failed: ${(err as Error).message}`);
+        }
+      };
+    }
+
+    pactdock = new PactDock(ctx, new GitHubRepo(new Http({ ...http, token: repoToken }), owner, repo), makeStore, log, undefined, notifier);
     const outcome = await pactdock.run();
     setOutput("result", outcome.result);
     setOutput("unsigned", outcome.unsigned.join(","));

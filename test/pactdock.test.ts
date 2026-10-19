@@ -68,7 +68,8 @@ function commentEvent(repo: FakeRepo, user: { id: number; login: string; type?: 
   };
 }
 
-const ICLA_PATH = "signatures/individual/aspec-icla/101.json";
+const ICLA_PATH = "signatures/individual/aspec-icla/1.0/101.json";
+const OLD_ICLA_PATH = "signatures/individual/aspec-icla/0.9/101.json";
 const phrase = individualPhrase({ id: "aspec-icla", name: "ASPEC Individual CLA", version: "1.0", document: "", acceptedVersions: ["1.0"] });
 
 test("unsigned pull request fails and posts instructions", async () => {
@@ -92,9 +93,9 @@ test("signing comment records evidence and turns the check green", async () => {
   assert.equal(out.result, "passed");
   assert.equal(repo.lastStatus()?.state, "success");
   const record = store.json(ICLA_PATH);
-  assert.equal(record.schema, "pactdock/individual@1");
+  assert.equal(record.schema, "pactdock/individual@2");
   assert.equal(record.account.id, 101);
-  const sig = record.signatures[0];
+  const sig = record.signature;
   assert.equal(sig.version, "1.0");
   assert.equal(sig.documentSha256, sha256(ICLA_TEXT));
   assert.equal(sig.signedAt, "2026-10-20T01:02:03Z");
@@ -122,15 +123,19 @@ test("duplicate delivery of the same comment is idempotent", async () => {
   const ev = commentEvent(repo, { ...ALICE }, phrase);
   await make(repo, store, ev).run();
   await make(repo, store, ev).run();
-  assert.equal(store.json(ICLA_PATH).signatures.length, 1);
+  assert.equal(store.json(ICLA_PATH).signature.evidence.commentId, ev.payload!['comment'].id);
   assert.equal(store.writes.length, 1);
 });
 
-test("store write conflicts are retried", async () => {
+test("records are write-once: a second signature never replaces the first", async () => {
   const { repo, store } = setup();
-  store.conflicts = 2;
+  const first = commentEvent(repo, { ...ALICE }, phrase);
+  await make(repo, store, first).run();
+  const original = store.files.get(ICLA_PATH)?.text;
   const out = await make(repo, store, commentEvent(repo, { ...ALICE }, phrase)).run();
   assert.equal(out.result, "passed");
+  assert.equal(store.files.get(ICLA_PATH)?.text, original);
+  assert.equal(store.writes.length, 1);
 });
 
 test("non-contributors cannot sign on someone else's pull request", async () => {
@@ -168,10 +173,10 @@ test("payload body that differs from the live comment is rejected", async () => 
 
 test("old-version signature does not satisfy a new version unless accepted", async () => {
   const { repo, store } = setup();
-  store.put(ICLA_PATH, {
-    schema: "pactdock/individual@1",
+  store.put(OLD_ICLA_PATH, {
+    schema: "pactdock/individual@2",
     account: ALICE,
-    signatures: [{ agreementId: "aspec-icla", version: "0.9", signedAt: "x", signer: ALICE, evidence: { method: "manual" } }],
+    signature: { agreementId: "aspec-icla", version: "0.9", signedAt: "x", signer: ALICE, evidence: { method: "manual" } },
   });
   assert.equal((await make(repo, store, {}).run()).result, "failed");
   const cfg = baseConfig();
@@ -183,11 +188,21 @@ test("old-version signature does not satisfy a new version unless accepted", asy
 test("a record for one account cannot vouch for another (fail closed)", async () => {
   const { repo, store } = setup();
   store.put(ICLA_PATH, {
-    schema: "pactdock/individual@1",
+    schema: "pactdock/individual@2",
     account: ALICE,
-    signatures: [{ agreementId: "aspec-icla", version: "1.0", signedAt: "x", signer: BOB, evidence: { method: "manual" } }],
+    signature: { agreementId: "aspec-icla", version: "1.0", signedAt: "x", signer: BOB, evidence: { method: "manual" } },
   });
   await assert.rejects(make(repo, store, {}).run(), /signature by another account/);
+});
+
+test("a record whose contents do not match its location fails closed", async () => {
+  const { repo, store } = setup();
+  store.put(ICLA_PATH, {
+    schema: "pactdock/individual@2",
+    account: ALICE,
+    signature: { agreementId: "aspec-icla", version: "0.9", signedAt: "x", signer: ALICE, evidence: { method: "manual" } },
+  });
+  await assert.rejects(make(repo, store, {}).run(), /does not match its location/);
 });
 
 test("co-authors and commit authors must all sign; unresolved emails fail", async () => {
@@ -252,7 +267,7 @@ test("entity signature is pending until a maintainer activates it", async () => 
 
 test("malformed entity records fail closed", async () => {
   const { repo, store } = setup();
-  store.files.set("signatures/entity/aspec-ecla/bad.json", { text: "{nope", sha: "1" });
+  store.files.set("signatures/entity/aspec-ecla/bad.json", { text: "{nope" });
   await assert.rejects(make(repo, store, {}).run(), /not valid JSON/);
 });
 

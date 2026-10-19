@@ -1,6 +1,6 @@
 // GitHub API implementations of RepoPort and StorePort.
 import { GitHubApiError, Http } from "./http.js";
-import { StoreConflictError, } from "./types.js";
+import {} from "./types.js";
 const enc = encodeURIComponent;
 function encPath(path) {
     return path.split("/").map(enc).join("/");
@@ -148,7 +148,7 @@ export class GitHubStore {
             return null;
         if (Array.isArray(content))
             throw new Error(`${path} is a directory.`);
-        return { text: decodeFile(content, path).toString("utf8"), sha: content.sha };
+        return { text: decodeFile(content, path).toString("utf8") };
     }
     async list(directory) {
         const content = await readContent(this.#http, this.#base, directory, this.#branch);
@@ -158,20 +158,21 @@ export class GitHubStore {
             throw new Error(`${directory} is not a directory.`);
         return content.filter((c) => c.type === "file").map((c) => c.name);
     }
-    async write(path, text, sha, message) {
+    async create(path, text, message) {
         const body = { message, content: Buffer.from(text, "utf8").toString("base64") };
-        if (sha)
-            body["sha"] = sha;
         if (this.#branch)
             body["branch"] = this.#branch;
         try {
+            // No blob sha supplied: GitHub refuses to overwrite an existing file.
             await this.#http.request("PUT", `${this.#base}/contents/${encPath(path)}`, { body });
+            return "created";
         }
         catch (err) {
-            // 409, or 422 complaining about the blob sha, means someone else wrote first.
-            // Other 422s (e.g. a missing branch) are real errors and must surface as such.
+            // 422 complaining about the missing sha means the file already exists; 409 is a
+            // concurrent create. Other errors (e.g. a missing branch) must surface.
             if (err instanceof GitHubApiError && (err.status === 409 || (err.status === 422 && /sha/i.test(err.message)))) {
-                throw new StoreConflictError(path);
+                if (await this.read(path))
+                    return "exists";
             }
             throw err;
         }
