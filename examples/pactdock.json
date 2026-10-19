@@ -1,0 +1,28 @@
+{
+  "$comment": "Place at .github/pactdock.json on the default branch. See docs/CONFIGURATION.md.",
+  "rightsHolder": "ASPEC RACING PTY LTD",
+  "individual": {
+    "id": "aspec-icla",
+    "name": "ASPEC Individual Contributor Licence Agreement",
+    "version": "1.0",
+    "document": ".github/cla/ASPEC-ICLA-1.0.md"
+  },
+  "entity": {
+    "id": "aspec-ecla",
+    "name": "ASPEC Entity Contributor Licence Agreement",
+    "version": "1.0",
+    "document": ".github/cla/ASPEC-ECLA-1.0.md"
+  },
+  "storage": {
+    "repository": "aspec-racing/cla-signatures",
+    "directory": "signatures"
+  },
+  "statusContext": "PactDock CLA",
+  "allowlist": {
+    "$comment": "Numeric account IDs only. 49699333 = dependabot[bot], 41898282 = github-actions[bot].",
+    "accountIds": [49699333, 41898282]
+  },
+  "coAuthors": true,
+  "committers": false,
+  "comment": true
+}

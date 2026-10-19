@@ -1,0 +1,12 @@
+# Contributing to PactDock
+
+Thank you for helping. Before your pull request can be merged, you will be asked to accept the ASPEC Individual Contributor Licence Agreement (or your employer the Entity agreement). This happens once the CLA workflow is enabled; see [docs/LEGAL_REVIEW.md](docs/LEGAL_REVIEW.md).
+
+Ground rules:
+
+- **No runtime dependencies.** PactDock's security story depends on it. Dev dependencies need a strong reason.
+- Pin any GitHub Action to a full commit SHA with the version in a comment.
+- Every behaviour change needs a test. Run `npm run all` before pushing.
+- Rebuild and commit `dist/` with any `src/` change (CI enforces this).
+- Update [MASTER_PLAN.md](MASTER_PLAN.md) first if you change architecture or security behaviour.
+- Report vulnerabilities privately (see [SECURITY.md](SECURITY.md)).

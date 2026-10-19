@@ -1,0 +1,14 @@
+{
+  "$comment": "Minimal configuration storing signatures on a dedicated branch of the same repository. Only suitable for PRIVATE repositories, or where signature records may be public.",
+  "rightsHolder": "Example Pty Ltd",
+  "individual": {
+    "id": "example-icla",
+    "name": "Example Individual CLA",
+    "version": "1.0",
+    "document": ".github/cla/ICLA.md"
+  },
+  "storage": {
+    "repository": "self",
+    "branch": "pactdock-signatures"
+  }
+}

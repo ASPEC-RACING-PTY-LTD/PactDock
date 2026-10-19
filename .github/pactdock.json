@@ -1,0 +1,22 @@
+{
+  "$comment": "PactDock's own CLA configuration (dogfooding). Agreements are drafts pending legal review; do not enable the workflow until approved.",
+  "rightsHolder": "ASPEC RACING PTY LTD",
+  "individual": {
+    "id": "aspec-icla",
+    "name": "ASPEC Individual Contributor Licence Agreement",
+    "version": "1.0",
+    "document": ".github/cla/ASPEC-ICLA-1.0.md"
+  },
+  "entity": {
+    "id": "aspec-ecla",
+    "name": "ASPEC Entity Contributor Licence Agreement",
+    "version": "1.0",
+    "document": ".github/cla/ASPEC-ECLA-1.0.md"
+  },
+  "storage": {
+    "repository": "aspec-racing/cla-signatures"
+  },
+  "allowlist": {
+    "accountIds": [49699333, 41898282]
+  }
+}

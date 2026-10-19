@@ -1,0 +1,40 @@
+name: PactDock CLA
+description: Self-contained Contributor Licence Agreement enforcement. Signatures are stored in a GitHub repository you control.
+author: ASPEC RACING PTY LTD
+branding:
+  icon: check-square
+  color: blue
+
+inputs:
+  github-token:
+    description: Token for the pull request repository (statuses, comments). Ignored when app-id is set.
+    required: false
+    default: ${{ github.token }}
+  app-id:
+    description: GitHub App ID or Client ID. When set, PactDock mints short-lived, repository-scoped installation tokens (recommended).
+    required: false
+  app-private-key:
+    description: Private key (PEM) of the GitHub App.
+    required: false
+  store-token:
+    description: Fine-grained token with Contents read/write on the signature repository only. Alternative to a GitHub App.
+    required: false
+  config-path:
+    description: Path of the PactDock configuration file on the default branch.
+    required: false
+    default: .github/pactdock.json
+  pull-request:
+    description: Pull request number to recheck (workflow_dispatch). Without it, workflow_dispatch and schedule recheck all open pull requests.
+    required: false
+
+outputs:
+  result:
+    description: passed, failed, signed, skipped, mixed or error.
+  unsigned:
+    description: Comma-separated logins that still need to sign.
+  checked:
+    description: Comma-separated pull request numbers that were evaluated.
+
+runs:
+  using: node24
+  main: dist/index.js

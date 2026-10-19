@@ -1,0 +1,12 @@
+# Proposes updates to pinned action SHAs and dev dependencies. Review every
+# update before merging: pins are a security control, not a formality.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly

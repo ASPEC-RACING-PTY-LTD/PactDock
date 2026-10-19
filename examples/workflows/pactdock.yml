@@ -1,0 +1,55 @@
+# .github/workflows/pactdock.yml: copy into the repository you want to protect.
+#
+# Security notes
+# - pull_request_target and issue_comment always run the workflow file from the
+#   DEFAULT BRANCH, so a pull request cannot alter this workflow.
+# - There is deliberately no actions/checkout step. PactDock reads only PR
+#   metadata through the API and never executes contributor code.
+# - Pin PactDock to a full commit SHA that you have reviewed.
+name: PactDock CLA
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+  issue_comment:
+    types: [created]
+  # Optional: periodically recheck open PRs (e.g. after someone signs elsewhere).
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+    inputs:
+      pull-request:
+        description: Pull request number to recheck (blank = all open PRs)
+        required: false
+
+# Least privilege for GITHUB_TOKEN. Remove statuses/pull-requests/issues if you
+# use GitHub App mode (the App's own token is used instead).
+permissions:
+  contents: read
+  statuses: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: pactdock-${{ github.event.pull_request.number || github.event.issue.number || github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  cla:
+    # Skip comment events that are clearly not for PactDock, to save minutes.
+    if: >-
+      github.event_name != 'issue_comment' ||
+      (github.event.issue.pull_request &&
+       (contains(github.event.comment.body, 'agree to the') || contains(github.event.comment.body, '/pactdock')))
+    runs-on: ubuntu-latest   # self-hosted runners work too (Node 24 capable)
+    timeout-minutes: 5
+    steps:
+      - uses: aspec-racing/pactdock@0000000000000000000000000000000000000000 # v1.0.0 - replace with a reviewed SHA
+        with:
+          # Recommended: a GitHub App (see docs/SETUP.md).
+          app-id: ${{ vars.PACTDOCK_APP_ID }}
+          app-private-key: ${{ secrets.PACTDOCK_APP_PRIVATE_KEY }}
+          # Alternative to the App: a fine-grained PAT limited to the signature
+          # repository with Contents read/write.
+          # store-token: ${{ secrets.PACTDOCK_STORE_TOKEN }}
+          pull-request: ${{ inputs.pull-request }}
