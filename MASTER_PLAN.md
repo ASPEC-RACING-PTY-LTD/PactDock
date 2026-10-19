@@ -104,7 +104,7 @@ Threat model and controls (details in [docs/SECURITY_MODEL.md](docs/SECURITY_MOD
 | Errors or partial runs | Fail closed: a `pending` status is set before evaluation. Errors set `error` and exit 1. A missing status blocks the merge. |
 | Markdown or mention injection via git names | Untrusted strings are stripped to a safe character set and rendered in code spans. |
 | Token leakage | Tokens are masked (`::add-mask::`). App tokens are scoped to one repository with minimal permissions and expire within an hour. No `persist-credentials`. |
-| Dependency or action supply chain | Zero runtime dependencies. CI actions are pinned to SHAs. Dependabot proposes updates for review. `check-dist` proves `dist/` equals the reviewed source. |
+| Dependency or action supply chain | Zero runtime dependencies. CI actions are pinned to SHAs. Updates are made manually and reviewed (no automated update bots). `check-dist` proves `dist/` equals the reviewed source. |
 | Config typos weakening enforcement | Strict validation: unknown keys are rejected and all values are pattern-checked. |
 | Silent agreement text change | Optional `sha256` pin. Every signature records the document hash. |
 
